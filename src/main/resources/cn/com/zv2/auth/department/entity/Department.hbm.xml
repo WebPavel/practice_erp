@@ -1,0 +1,12 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.auth.department.entity.Department" table="auth_department">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="name" />
+        <property name="telephone" />
+    </class>
+</hibernate-mapping>

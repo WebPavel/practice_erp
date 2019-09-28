@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="managerAction" class="cn.com.zv2.auth.manager.web.ManagerAction" scope="prototype">
+        <property name="managerService" ref="managerService"/>
+    </bean>
+    <!--Service-->
+    <bean id="managerService" class="cn.com.zv2.auth.manager.service.impl.ManagerServiceImpl">
+        <property name="managerDao" ref="managerDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="managerDao" class="cn.com.zv2.auth.manager.dao.impl.ManagerDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

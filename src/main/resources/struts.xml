@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--打开开发者模式-->
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.ui.theme" value="simple"/>
+    <package name="default" namespace="/" extends="struts-default">
+        <interceptors>
+            <interceptor name="loginInterceptor" class="loginInterceptor"/>
+            <interceptor-stack name="systemStack">
+                <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="systemStack"/>
+        <global-results>
+            <result name="login">/WEB-INF/jsp/login.jsp</result>
+            <result name="edit">/WEB-INF/jsp/${actionName}/edit.jsp</result>
+            <result name="list">/WEB-INF/jsp/${actionName}/list.jsp</result>
+            <result name="redirectList" type="redirectAction">${actionName}_list</result>
+        </global-results>
+        <action name="login" class="com.opensymphony.xwork2.ActionSupport">
+            <result>/WEB-INF/jsp/login.jsp</result>
+        </action>
+        <action name="content" class="com.opensymphony.xwork2.ActionSupport">
+            <result>/WEB-INF/jsp/content.jsp</result>
+        </action>
+
+        <!--Department-->
+        <action name="department_*" class="departmentAction" method="{1}">
+        </action>
+
+        <!--Manager-->
+        <action name="manager_*" class="managerAction" method="{1}">
+        </action>
+
+        <!--Employee-->
+        <action name="employee_*" class="employeeAction" method="{1}">
+            <result name="loginFail">/WEB-INF/jsp/login.jsp</result>
+            <result name="loginSuccess">/WEB-INF/jsp/main.jsp</result>
+        </action>
+
+    </package>
+</struts>

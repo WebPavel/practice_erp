@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.auth.employee.entity.Employee" table="employee">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="username" />
+        <property name="password" />
+        <property name="name" />
+        <property name="email" />
+        <property name="telephone" />
+        <property name="address" />
+        <property name="gender" />
+        <property name="birthday" />
+        <many-to-one name="department" class="cn.com.zv2.auth.department.entity.Department" column="departmentId"></many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="departmentAction" class="cn.com.zv2.auth.department.web.DepartmentAction" scope="prototype">
+        <property name="departmentService" ref="departmentService"/>
+    </bean>
+    <!--Service-->
+    <bean id="departmentService" class="cn.com.zv2.auth.department.service.impl.DepartmentServiceImpl">
+        <property name="departmentDao" ref="departmentDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="departmentDao" class="cn.com.zv2.auth.department.dao.impl.DepartmentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>
