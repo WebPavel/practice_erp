@@ -7,10 +7,13 @@
     <!--打开开发者模式-->
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.ui.theme" value="simple"/>
+    <constant name="struts.custom.i18n.resources" value="message"/>
     <package name="default" namespace="/" extends="struts-default">
         <interceptors>
             <interceptor name="loginInterceptor" class="loginInterceptor"/>
+            <interceptor name="exceptionInterceptor" class="exceptionInterceptor"/>
             <interceptor-stack name="systemStack">
+                <interceptor-ref name="exceptionInterceptor"/>
                 <interceptor-ref name="loginInterceptor"/>
                 <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
@@ -18,6 +21,7 @@
         <default-interceptor-ref name="systemStack"/>
         <global-results>
             <result name="login">/WEB-INF/jsp/login.jsp</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
             <result name="edit">/WEB-INF/jsp/${actionName}/edit.jsp</result>
             <result name="list">/WEB-INF/jsp/${actionName}/list.jsp</result>
             <result name="redirectList" type="redirectAction">${actionName}_list</result>
@@ -41,6 +45,7 @@
         <action name="employee_*" class="employeeAction" method="{1}">
             <result name="loginFail">/WEB-INF/jsp/login.jsp</result>
             <result name="loginSuccess">/WEB-INF/jsp/main.jsp</result>
+            <result name="doChangePwd">/WEB-INF/jsp/employee/changePwd.jsp</result>
         </action>
 
     </package>

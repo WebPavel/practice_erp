@@ -7,4 +7,5 @@ public interface EmployeeDao extends BaseDao<Employee> {
 
     Employee getByUsernameAndPassword(String username, String password);
 
+    boolean updatePwdByUsernameAndPwd(String username, String password, String newPassword);
 }

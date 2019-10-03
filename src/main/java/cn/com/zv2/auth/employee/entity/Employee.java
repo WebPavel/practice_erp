@@ -1,6 +1,10 @@
 package cn.com.zv2.auth.employee.entity;
 
 import cn.com.zv2.auth.department.entity.Department;
+import cn.com.zv2.util.format.DateUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author lb
@@ -9,6 +13,18 @@ import cn.com.zv2.auth.department.entity.Department;
 public class Employee {
 
     public static final String EMPLOYEE_LOGIN_USER_OBJECT_NAME = "loginEmployee";
+    public static final Integer EMPLOYEE_GENDER_FEMALE = 0;
+    public static final Integer EMPLOYEE_GENDER_MALE = 1;
+
+    public static final String EMPLOYEE_GENDER_FEMALE_VIEW = "女";
+    public static final String EMPLOYEE_GENDER_MALE_VIEW = "男";
+
+    public static final Map<Integer, String> genderMap = new HashMap<>(2);
+
+    static {
+        genderMap.put(EMPLOYEE_GENDER_FEMALE, EMPLOYEE_GENDER_FEMALE_VIEW);
+        genderMap.put(EMPLOYEE_GENDER_MALE, EMPLOYEE_GENDER_MALE_VIEW);
+    }
 
     private Long id;
     // 用户名
@@ -23,12 +39,22 @@ public class Employee {
     private String telephone;
     // 地址
     private String address;
-    // 性别{0:男,1:女}
+    // 性别{0:女,1:男}
     private Integer gender;
+    private String genderView;
     // 出生日期
     private Long birthday;
+    // 视图值
+    private String birthdayView;
+    // 最后登录IP
+    private String lastLoginIP;
+    // 最后登录时间
+    private Long gmtLastLogin;
+    private String gmtLastLoginView;
+    // 登录次数
+    private Integer loginCount;
     // 所属部门
-    private Department department;
+    private Department department = new Department();
 
     public Long getId() {
         return id;
@@ -92,6 +118,11 @@ public class Employee {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+        this.genderView = genderMap.get(gender);
+    }
+
+    public String getGenderView() {
+        return genderView;
     }
 
     public Long getBirthday() {
@@ -100,6 +131,45 @@ public class Employee {
 
     public void setBirthday(Long birthday) {
         this.birthday = birthday;
+        this.birthdayView = DateUtils.formatDate(this.birthday);
+    }
+
+    public String getBirthdayView() {
+        return birthdayView;
+    }
+
+    public void setBirthdayView(String birthdayView) {
+        this.birthdayView = birthdayView;
+        this.birthday = DateUtils.parse(this.birthdayView);
+    }
+
+    public String getLastLoginIP() {
+        return lastLoginIP;
+    }
+
+    public void setLastLoginIP(String lastLoginIP) {
+        this.lastLoginIP = lastLoginIP;
+    }
+
+    public Long getGmtLastLogin() {
+        return gmtLastLogin;
+    }
+
+    public void setGmtLastLogin(Long gmtLastLogin) {
+        this.gmtLastLogin = gmtLastLogin;
+        this.gmtLastLoginView = DateUtils.formatDate(this.gmtLastLogin);
+    }
+
+    public String getGmtLastLoginView() {
+        return gmtLastLoginView;
+    }
+
+    public Integer getLoginCount() {
+        return loginCount;
+    }
+
+    public void setLoginCount(Integer loginCount) {
+        this.loginCount = loginCount;
     }
 
     public Department getDepartment() {
@@ -109,4 +179,5 @@ public class Employee {
     public void setDepartment(Department department) {
         this.department = department;
     }
+
 }

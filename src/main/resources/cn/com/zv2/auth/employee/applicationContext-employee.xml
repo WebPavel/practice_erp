@@ -6,6 +6,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <!--Action-->
     <bean id="employeeAction" class="cn.com.zv2.auth.employee.web.EmployeeAction" scope="prototype">
         <property name="employeeService" ref="employeeService"/>
+        <property name="departmentService" ref="departmentService"/>
     </bean>
     <!--Service-->
     <bean id="employeeService" class="cn.com.zv2.auth.employee.service.impl.EmployeeServiceImpl">

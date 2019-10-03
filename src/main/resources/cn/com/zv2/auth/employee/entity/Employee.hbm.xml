@@ -14,6 +14,9 @@
         <property name="address" />
         <property name="gender" />
         <property name="birthday" />
+        <property name="lastLoginIP" />
+        <property name="gmtLastLogin" />
+        <property name="loginCount" />
         <many-to-one name="department" class="cn.com.zv2.auth.department.entity.Department" column="departmentId"></many-to-one>
     </class>
 </hibernate-mapping>

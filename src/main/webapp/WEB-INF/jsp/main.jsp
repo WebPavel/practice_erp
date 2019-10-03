@@ -19,12 +19,12 @@
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td width="32%">
-							<a href="#" target="main">
+							<a href="employee_doChangePwd.action" target="main">
 								<img src="${pageContext.request.contextPath}/image/head-l.gif"	border="0" />
 							</a>
 						</td>
 						<td width="26%">
-							<a href="#">
+							<a href="employee_logout.action">
 								<img src="${pageContext.request.contextPath}/image/head-m.gif"	border="0" />
 							</a>
 						</td>
@@ -124,7 +124,7 @@
 								<td><a class="black" target="main" href="department_list.action">&nbsp;&nbsp;&nbsp;&nbsp;部门维护</a></td>
 							</tr>
 							<tr>
-								<td><a class="black" target="main" href="employee/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;员工维护</a></td>
+								<td><a class="black" target="main" href="employee_list.action">&nbsp;&nbsp;&nbsp;&nbsp;员工维护</a></td>
 							</tr>
 							<tr>
 								<td><a class="black" target="main" href="role/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;角色维护</a></td>
