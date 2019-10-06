@@ -1,6 +1,8 @@
 package cn.com.zv2.core.generator;
 
 import cn.com.zv2.auth.employee.entity.Employee;
+import cn.com.zv2.auth.resource.entity.Resource;
+import cn.com.zv2.auth.role.entity.Role;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -49,6 +51,8 @@ public class GeneratorUtils {
         generateAction();
         generateApplicationContextXml();
         modifyStrutsXml();
+        generateListPage();
+        generateEditPage();
     }
 
     private void init() {
@@ -62,6 +66,15 @@ public class GeneratorUtils {
         System.out.println("modulePackageName=" + modulePackageName);
         moduleDirPath = modulePackageName.replace(".", "/");
         System.out.println("moduleDirPath=" + moduleDirPath);
+    }
+
+    private static void preGenerateDirectory() {
+        File cssDir = new File("src/main/webapp/css");
+        cssDir.mkdirs();
+        File jsDir = new File("src/main/webapp/js");
+        jsDir.mkdirs();
+        File imageDir = new File("src/main/webapp/image");
+        imageDir.mkdirs();
     }
 
     private void generateDirectory() {
@@ -82,6 +95,10 @@ public class GeneratorUtils {
         serviceImplDir.mkdirs();
         File webDir = new File("src/main/java/" + moduleDirPath + "/web");
         webDir.mkdirs();
+        File entityDirOfResources = new File("src/main/resources/" + moduleDirPath + "/entity");
+        entityDirOfResources.mkdirs();
+        File pageDir = new File("src/main/webapp/WEB-INF/jsp/" + lccClassName);
+        pageDir.mkdirs();
     }
 
     private void generateQueryModel() throws IOException {
@@ -517,8 +534,325 @@ public class GeneratorUtils {
         outputStream.close();
     }
 
+    private void generateListPage() throws IOException {
+        File file = new File("src/main/webapp/WEB-INF/jsp/" + lccClassName + "/list.jsp");
+        if (file.exists()) {
+            return;
+        }
+        file.createNewFile();
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        bufferedWriter.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" isELIgnored=\"false\" %>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<%@ taglib prefix=\"s\" uri=\"/struts-tags\" %>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<link href=\"${pageContext.request.contextPath}/css/index.css\" rel=\"stylesheet\" type=\"text/css\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<script type=\"text/javascript\" src=\"${pageContext.request.contextPath}/js/jquery-1.12.4.js\"></script>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<script type=\"text/javascript\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    $(function () {");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        $(\"#query\").click(function () {");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            $(\"[name=pageNum]\").val(1);");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            $(\"form:first\").submit();");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        });");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    });");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    function confirm(tip, id) {");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        top.lock.show();");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        top.$('context').style.display = 'block';");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        top.$('context-text').innerHTML = tip;");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        top.$('hide-action').value = '" + lccClassName + "_delete.action?" + lccClassName + ".id=' + id;");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    }");
+        bufferedWriter.newLine();
+        bufferedWriter.write("</script>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<div class=\"content-right\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    <div class=\"content-right-pic_w\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        <div style=\"margin:8px auto auto 12px;margin-top:6px\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            <span class=\"page_title\">管理</span>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    <div class=\"content-text\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        <s:form action=\"" + lccClassName + "_list.action\" method=\"post\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            <div class=\"square-order-top\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"font-size:14px; font-weight:bold; font-family:'黑体';\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    <tr>");
+        bufferedWriter.newLine();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            if ("id".equals(fieldName)) {
+                continue;
+            }
+            bufferedWriter.write("                        <td width=\"\">:</td>");
+            bufferedWriter.newLine();
+            bufferedWriter.write("                        <td width=\"\"><s:textfield name=\"" + lccClassName + "QueryModel." + fieldName + "\" size=\"18\"/></td>");
+            bufferedWriter.newLine();
+        }
+        bufferedWriter.write("                        <td width=\"70\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            <a id=\"query\"><img src=\"${pageContext.request.contextPath}/image/can_b_01.gif\" border=\"0\"/></a>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        </td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        <td width=\"70\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            <a href=\"" + lccClassName + "_edit.action\"><img src=\"${pageContext.request.contextPath}/image/can_b_02.gif\" border=\"0\"/></a>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        </td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    </tr>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                </table>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            <!--\"square-order-top\"end-->");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            <div class=\"square-order\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                <s:if test=\"#" + lccClassName + "List.size() == 0\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    <center>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        <span style=\"font-size:20px;color:#96D34A;font-weight:bold\">没有查找到满足条件的数据！</span>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    </center>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                </s:if>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                <s:else>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    <table width=\"100%\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        <tr align=\"center\" style=\"background:url(${pageContext.request.contextPath}/image/table_bg.gif) repeat-x;\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            <td width=\"16%\">操作</td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        </tr>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        <s:iterator value=\"" + lccClassName + "List\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            <tr align=\"center\" bgcolor=\"#FFFFFF\">");
+        bufferedWriter.newLine();
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            if ("id".equals(fieldName)) {
+                continue;
+            }
+            bufferedWriter.write("                                <td><s:property value=\"" + fieldName + "\"/></td>");
+            bufferedWriter.newLine();
+        }
+        bufferedWriter.write("                                <td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                    <img src=\"${pageContext.request.contextPath}/image/icon_03.gif\"/>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                    <span style=\"line-height:12px; text-align:center;\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                        <s:a action=\"" + lccClassName + "_edit\" cssClass=\"edit\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                            <s:param name=\"" + lccClassName + ".id\" value=\"id\"/>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                            修改");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                        </s:a>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                    </span>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                    <img src=\"${pageContext.request.contextPath}/image/icon_04.gif\"/>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                    <span style=\"line-height:12px; text-align:center;\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                        <a href=\"javascript:void(0)\" class=\"edit\" onclick=\"confirm('是否删除该项数据？', <s:property value=\"id\"/>)\">删除</a>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                    </span>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                </td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            </tr>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        </s:iterator>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    </table>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    <%@ include file=\"/WEB-INF/jsp/tools/paging.jsp\" %>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                </s:else>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        </s:form>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    <div class=\"content-bbg\"></div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("</div>");
+        bufferedWriter.newLine();
+        bufferedWriter.flush();
+        bufferedWriter.close();
+    }
+
+    private void generateEditPage() throws IOException {
+        File file = new File("src/main/webapp/WEB-INF/jsp/" + lccClassName + "/edit.jsp");
+        if (file.exists()) {
+            return;
+        }
+        file.createNewFile();
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        bufferedWriter.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" isELIgnored=\"false\" %>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<%@ taglib prefix=\"s\" uri=\"/struts-tags\" %>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<link href=\"/css/index.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<script type=\"text/javascript\" src=\"/js/jquery-1.12.4.js\"></script>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<script type=\"text/javascript\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    $(function () {");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        $(\"#commit\").click(function () {");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            $(\"form:first\").submit();");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        });");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    });");
+        bufferedWriter.newLine();
+        bufferedWriter.write("</script>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("<div class=\"content-right\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    <div class=\"content-right-pic_w\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        <div style=\"margin:8px auto auto 12px;margin-top:6px\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            <span class=\"page_title\">" + uccClassName + "管理</span>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    <div class=\"content-text\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        <div class=\"square-order\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            <s:form action=\"" + lccClassName + "_updateIfPresent\" method=\"post\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                <s:hidden name=\"" + lccClassName + ".id\"/>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                <div style=\"border:1px solid #cecece;\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        <tr bgcolor=\"#FFFFFF\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            <td>&nbsp;</td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        </tr>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    </table>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+        bufferedWriter.newLine();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            if ("id".equals(fieldName)) {
+                continue;
+            }
+            bufferedWriter.write("                        <tr bgcolor=\"#FFFFFF\">");
+            bufferedWriter.newLine();
+            bufferedWriter.write("                            <td width=\"%\" align=\"center\">:</td>");
+            bufferedWriter.newLine();
+            bufferedWriter.write("                            <td width=\"%\">");
+            bufferedWriter.newLine();
+            bufferedWriter.write("                                <s:textfield name=\"" + lccClassName + "." + fieldName + "\" size=\"25\"/>");
+            bufferedWriter.newLine();
+            bufferedWriter.write("                            </td>");
+            bufferedWriter.newLine();
+            bufferedWriter.write("                        </tr>");
+            bufferedWriter.newLine();
+        }
+        bufferedWriter.write("                        <tr bgcolor=\"#FFFFFF\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            <td colspan=\"4\">&nbsp;</td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        </tr>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    </table>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                <div class=\"order-bottom\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    <div style=\"margin:1px auto auto 1px;\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            <tr>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                <td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                    <a href=\"javascript:void(0)\" id=\"commit\"><img src=\"/image/order_tuo.gif\" border=\"0\"/></a>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                </td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                <td>&nbsp;</td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                <td><a href=\"#\"><img src=\"/image/order_tuo.gif\" border=\"0\"/></a></td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                <td>&nbsp;</td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                                <td><a href=\"#\"><img src=\"/image/order_tuo.gif\" border=\"0\"/></a></td>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                            </tr>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                        </table>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                    </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("                </div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("            </s:form>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("        </div><!--\"square-order\"end-->");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    </div><!--\"content-text\"end-->");
+        bufferedWriter.newLine();
+        bufferedWriter.write("    <div class=\"content-bbg\"><img src=\"/image/content_bbg.jpg\"/></div>");
+        bufferedWriter.newLine();
+        bufferedWriter.write("</div>");
+        bufferedWriter.newLine();
+        bufferedWriter.flush();
+        bufferedWriter.close();
+    }
+
     public static void main(String[] args) throws IOException {
-        new GeneratorUtils(Employee.class);
+        preGenerateDirectory();
+        new GeneratorUtils(Resource.class);
         System.out.println("struts.xml不推荐自动生成");
         System.out.println("xxx.hbm.xml未添加关联关系");
         System.out.println("QueryModel未添加自定义范围查询条件");

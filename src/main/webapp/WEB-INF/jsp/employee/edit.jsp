@@ -12,10 +12,10 @@
 
 	$(function() {
 		$("#all").click(function() {
-			$("[name=roles]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
+			$("[name=roleIds]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
 		});
 		$("#reverse").click(function() {
-			$("[name=roles]:checkbox").each(function () {
+			$("[name=roleIds]:checkbox").each(function () {
                 $(this).attr("checked", !$(this).attr("checked"));
             });
 		});
@@ -115,9 +115,7 @@
 				    <tr bgcolor="#FFFFFF">
 				      <td width="18%" height="30" align="center">&nbsp;</td>
 				      <td width="82%" colspan="3">
-				      	<input type="checkbox" name="roles">经理
-				      	<input type="checkbox" name="roles">主管
-				      	<input type="checkbox" name="roles">员工
+				      	<s:checkboxlist name="roleIds" list="roleList" listKey="id" listValue="name"></s:checkboxlist>
 				      </td>
 				    </tr>
 				    <tr  bgcolor="#FFFFFF">

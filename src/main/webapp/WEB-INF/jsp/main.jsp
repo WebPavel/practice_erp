@@ -127,10 +127,10 @@
 								<td><a class="black" target="main" href="employee_list.action">&nbsp;&nbsp;&nbsp;&nbsp;员工维护</a></td>
 							</tr>
 							<tr>
-								<td><a class="black" target="main" href="role/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;角色维护</a></td>
+								<td><a class="black" target="main" href="role_list.action">&nbsp;&nbsp;&nbsp;&nbsp;角色维护</a></td>
 							</tr>
 							<tr>
-								<td><a class="black" target="main" href="resource/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;资源维护</a></td>
+								<td><a class="black" target="main" href="resource_list.action">&nbsp;&nbsp;&nbsp;&nbsp;资源维护</a></td>
 							</tr>
 							<tr>
 								<td><a class="black" target="main" href="menu/list.jsp">&nbsp;&nbsp;&nbsp;&nbsp;菜单维护</a></td>

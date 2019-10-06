@@ -1,0 +1,16 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.auth.role.entity.Role" table="role">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="name" />
+        <property name="code" />
+        <set name="resourceSet" table="role_resource">
+            <key column="roleId"></key>
+            <many-to-many column="resourceId" class="cn.com.zv2.auth.resource.entity.Resource"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

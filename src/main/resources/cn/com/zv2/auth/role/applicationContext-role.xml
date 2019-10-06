@@ -4,17 +4,16 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!--Action-->
-    <bean id="employeeAction" class="cn.com.zv2.auth.employee.web.EmployeeAction" scope="prototype">
-        <property name="employeeService" ref="employeeService"/>
-        <property name="departmentService" ref="departmentService"/>
+    <bean id="roleAction" class="cn.com.zv2.auth.role.web.RoleAction" scope="prototype">
         <property name="roleService" ref="roleService"/>
+        <property name="resourceService" ref="resourceService"/>
     </bean>
     <!--Service-->
-    <bean id="employeeService" class="cn.com.zv2.auth.employee.service.impl.EmployeeServiceImpl">
-        <property name="employeeDao" ref="employeeDao"/>
+    <bean id="roleService" class="cn.com.zv2.auth.role.service.impl.RoleServiceImpl">
+        <property name="roleDao" ref="roleDao"/>
     </bean>
     <!--Dao-->
-    <bean id="employeeDao" class="cn.com.zv2.auth.employee.dao.impl.EmployeeDaoImpl">
+    <bean id="roleDao" class="cn.com.zv2.auth.role.dao.impl.RoleDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>

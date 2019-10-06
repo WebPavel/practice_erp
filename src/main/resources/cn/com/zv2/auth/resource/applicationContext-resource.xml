@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="resourceAction" class="cn.com.zv2.auth.resource.web.ResourceAction" scope="prototype">
+        <property name="resourceService" ref="resourceService"/>
+    </bean>
+    <!--Service-->
+    <bean id="resourceService" class="cn.com.zv2.auth.resource.service.impl.ResourceServiceImpl">
+        <property name="resourceDao" ref="resourceDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="resourceDao" class="cn.com.zv2.auth.resource.dao.impl.ResourceDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

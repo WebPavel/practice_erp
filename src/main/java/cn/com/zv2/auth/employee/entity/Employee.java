@@ -1,10 +1,13 @@
 package cn.com.zv2.auth.employee.entity;
 
 import cn.com.zv2.auth.department.entity.Department;
+import cn.com.zv2.auth.role.entity.Role;
 import cn.com.zv2.util.format.DateUtils;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author lb
@@ -55,6 +58,8 @@ public class Employee {
     private Integer loginCount;
     // 所属部门
     private Department department = new Department();
+    // 角色列表
+    private Set<Role> roleSet = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -180,4 +185,11 @@ public class Employee {
         this.department = department;
     }
 
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
+    }
 }

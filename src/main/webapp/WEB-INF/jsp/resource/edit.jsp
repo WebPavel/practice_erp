@@ -12,13 +12,13 @@
 <div class="content-right">
     <div class="content-right-pic_w">
         <div style="margin:8px auto auto 12px;margin-top:6px">
-            <span class="page_title">部门管理</span>
+            <span class="page_title">Resource管理</span>
         </div>
     </div>
     <div class="content-text">
         <div class="square-order">
-            <s:form action="department_updateIfPresent" method="post">
-                <s:hidden name="department.id"/>
+            <s:form action="resource_updateIfPresent" method="post">
+                <s:hidden name="resource.id"/>
                 <div style="border:1px solid #cecece;">
                     <table width="100%" border="0" cellpadding="0" cellspacing="0">
                         <tr bgcolor="#FFFFFF">
@@ -27,13 +27,15 @@
                     </table>
                     <table width="100%" border="0" cellpadding="0" cellspacing="0">
                         <tr bgcolor="#FFFFFF">
-                            <td width="18%" height="30" align="center">部门名称</td>
-                            <td width="32%">
-                                <s:textfield name="department.name" size="25"/>
+                            <td width="18%" height="30" align="center">资源名称:</td>
+                            <td width="82%" colspan="3">
+                                <s:textfield name="resource.name" size="25"/>
                             </td>
-                            <td width="18%" align="center">电话</td>
-                            <td width="32%">
-                                <s:textfield name="department.telephone" size="25"/>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td width="18%" height="30" align="center">资源路径:</td>
+                            <td width="82%" colspan="3">
+                                <s:textfield name="resource.url" size="82"/>
                             </td>
                         </tr>
                         <tr bgcolor="#FFFFFF">

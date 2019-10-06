@@ -1,7 +1,5 @@
 package cn.com.zv2.core.dao;
 
-import cn.com.zv2.core.entity.BaseQueryModel;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +12,8 @@ public interface BaseDao<T> {
     void update(T model);
     void delete(T model);
     T get(Serializable id);
-    List<T> list();
-    List<T> list(BaseQueryModel baseQueryModel, Integer pageNum, Integer pageSize);
-    Integer count(BaseQueryModel baseQueryModel);
+    List<T> list(int pageNum, int pageSize);
+    List<T> list(T queryModel, int pageNum, int pageSize);
+    Long count();
+    Long count(T queryModel);
 }

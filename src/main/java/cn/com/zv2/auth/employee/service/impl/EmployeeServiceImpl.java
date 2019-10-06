@@ -3,12 +3,15 @@ package cn.com.zv2.auth.employee.service.impl;
 import cn.com.zv2.auth.employee.dao.EmployeeDao;
 import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.auth.employee.service.EmployeeService;
+import cn.com.zv2.auth.role.entity.Role;
 import cn.com.zv2.util.base.BaseQueryModel;
 import cn.com.zv2.util.exception.ApplicationException;
 import cn.com.zv2.util.format.MD5Utils;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -22,36 +25,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void save(Employee employee) {
-        if (employee.getUsername() == null || employee.getUsername().trim().length() == 0) {
-            throw new ApplicationException("INFO_EMPLOYEE_USERNAME_IS_EMPTY");
-        }
-        // encrypt password
-        String password = employee.getPassword();
-        if (password != null && password.length() != ENCRYPT_PASSWORD_LENGTH) {
-            employee.setPassword(MD5Utils.md5(password));
-        }
-        employee.setLastLoginIP("-");
-        employee.setGmtLastLogin(System.currentTimeMillis());
-        employee.setLoginCount(0);
-        employeeDao.save(employee);
     }
 
     @Override
     public void update(Employee employee) {
-        // 快照更新
-        Employee employeeSnapshoot = employeeDao.get(employee.getId());
-        employeeSnapshoot.setName(employee.getName());
-        employeeSnapshoot.setEmail(employee.getEmail());
-        employeeSnapshoot.setTelephone(employee.getTelephone());
-        employeeSnapshoot.setGender(employee.getGender());
-        employeeSnapshoot.setBirthday(employee.getBirthday());
-        employeeSnapshoot.setAddress(employee.getAddress());
-        employeeSnapshoot.setDepartment(employee.getDepartment());
     }
 
     @Override
     public void delete(Employee employee) {
-        employeeDao.delete(employee);
+        Employee currEmployee = employeeDao.get(employee.getId());
+        if (currEmployee == null) {
+            throw new ApplicationException("can't find item[id=" + employee.getId() + "]");
+        }
+        employeeDao.delete(currEmployee);
     }
 
     @Override
@@ -100,6 +86,51 @@ public class EmployeeServiceImpl implements EmployeeService {
             newPassword = MD5Utils.md5(newPassword);
         }
         return employeeDao.updatePwdByUsernameAndPwd(username, password, newPassword);
+    }
+
+    @Override
+    public void save(Employee employee, Long[] roleIds) {
+        Set<Role> roleSet = new HashSet<>();
+        for (Long roleId : roleIds) {
+            Role role = new Role();
+            role.setId(roleId);
+            roleSet.add(role);
+        }
+        employee.setRoleSet(roleSet);
+        // check username
+        if (employee.getUsername() == null || employee.getUsername().trim().length() == 0) {
+            throw new ApplicationException("INFO_EMPLOYEE_USERNAME_IS_EMPTY");
+        }
+        // encrypt password
+        String password = employee.getPassword();
+        if (password != null && password.length() != ENCRYPT_PASSWORD_LENGTH) {
+            employee.setPassword(MD5Utils.md5(password));
+        }
+        employee.setLastLoginIP("-");
+        employee.setGmtLastLogin(System.currentTimeMillis());
+        employee.setLoginCount(0);
+        employeeDao.save(employee);
+    }
+
+    @Override
+    public void update(Employee employee, Long[] roleIds) {
+        // 快照更新
+        Employee employeeSnapshoot = employeeDao.get(employee.getId());
+        employeeSnapshoot.setName(employee.getName());
+        employeeSnapshoot.setEmail(employee.getEmail());
+        employeeSnapshoot.setTelephone(employee.getTelephone());
+        employeeSnapshoot.setGender(employee.getGender());
+        employeeSnapshoot.setBirthday(employee.getBirthday());
+        employeeSnapshoot.setAddress(employee.getAddress());
+        employeeSnapshoot.setDepartment(employee.getDepartment());
+
+        Set<Role> roleSet = new HashSet<>();
+        for (Long roleId : roleIds) {
+            Role role = new Role();
+            role.setId(roleId);
+            roleSet.add(role);
+        }
+        employeeSnapshoot.setRoleSet(roleSet);
     }
 
 }

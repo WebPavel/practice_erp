@@ -23,7 +23,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport {
     public BaseDaoImpl() {
         Type genericType = getClass().getGenericSuperclass();
         Type[] params = ((ParameterizedType) genericType).getActualTypeArguments();
-        entityClass = (Class) params[0];
+        entityClass = (Class<T>) params[0];
     }
 
     public Serializable save(T model) {

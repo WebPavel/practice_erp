@@ -5,6 +5,8 @@ import cn.com.zv2.auth.department.service.DepartmentService;
 import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.auth.employee.entity.EmployeeQueryModel;
 import cn.com.zv2.auth.employee.service.EmployeeService;
+import cn.com.zv2.auth.role.entity.Role;
+import cn.com.zv2.auth.role.service.RoleService;
 import cn.com.zv2.util.WebUtils;
 import cn.com.zv2.util.base.BaseAction;
 
@@ -14,10 +16,12 @@ import java.util.List;
 public class EmployeeAction extends BaseAction {
 
     public String newPassword;
+    public Long[] roleIds;
     public Employee employee = new Employee();
     public EmployeeQueryModel employeeQueryModel = new EmployeeQueryModel();
     private EmployeeService employeeService;
     private DepartmentService departmentService;
+    private RoleService roleService;
 
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -25,6 +29,10 @@ public class EmployeeAction extends BaseAction {
 
     public void setDepartmentService(DepartmentService departmentService) {
         this.departmentService = departmentService;
+    }
+
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     public String list() {
@@ -37,19 +45,26 @@ public class EmployeeAction extends BaseAction {
     }
 
     public String edit() {
+        List<Role> roleList = roleService.list();
+        put("roleList", roleList);
         List<Department> departmentList = departmentService.list();
         put("departmentList", departmentList);
         if (employee.getId() != null) {
             employee = employeeService.get(employee.getId());
+            roleIds = new Long[employee.getRoleSet().size()];
+            int i = 0;
+            for (Role role : employee.getRoleSet()) {
+                roleIds[i++] = role.getId();
+            }
         }
         return EDIT;
     }
 
     public String updateIfPresent() {
         if (employee.getId() == null) {
-            employeeService.save(employee);
+            employeeService.save(employee, roleIds);
         } else {
-            employeeService.update(employee);
+            employeeService.update(employee, roleIds);
         }
         return REDIRECT_LIST;
     }

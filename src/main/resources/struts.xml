@@ -48,5 +48,13 @@
             <result name="doChangePwd">/WEB-INF/jsp/employee/changePwd.jsp</result>
         </action>
 
+        <!--Role-->
+        <action name="role_*" class="roleAction" method="{1}">
+        </action>
+
+        <!--Resource-->
+        <action name="resource_*" class="resourceAction" method="{1}">
+        </action>
+
     </package>
 </struts>
