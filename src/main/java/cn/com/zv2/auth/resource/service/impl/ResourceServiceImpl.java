@@ -51,4 +51,8 @@ public class ResourceServiceImpl implements ResourceService {
         return resourceDao.count(baseQueryModel);
     }
 
+    @Override
+    public List<Resource> listByEmployee(Long id) {
+        return resourceDao.listByEmployeeId(id);
+    }
 }

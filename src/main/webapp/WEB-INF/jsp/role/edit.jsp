@@ -5,13 +5,24 @@
 <script type="text/javascript">
 	$(function() {
 		$("#all").click(function() {
-			$("[name=resourceIds]:checkbox").attr("checked",$("#all").attr("checked")=="checked");
+			$("[name=resourceIds]:checkbox").prop("checked", $(this).prop("checked"));
 		});
 		$("#reverse").click(function() {
-			$("[name=resourceIds]:checkbox").each(function () {
-                $(this).attr("checked", !$(this).attr("checked"));
+			$("[name=resourceIds]:checkbox").each(function() {
+                $(this).prop("checked", !$(this).prop("checked"));
             });
+			checkSelect();
 		});
+        $("[name=resourceIds]").click(function() {
+            checkSelect();
+        });
+        function checkSelect() {
+            var checked = true;
+            $("[name=resourceIds]").each(function() {
+                checked = checked && $(this).prop("checked");
+            });
+            $("#all").prop("checked", checked);
+        }
 	});
 </script>
 <div class="content-right">
@@ -60,8 +71,8 @@
 						 <tr bgcolor="#FFFFFF">
 						  <td width="18%" height="30" align="center">菜单名称</td>
 						  <td width="82%" colspan="3">
-							<input type="checkbox" id="all">全选&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" id="reverse">反选
+							<input type="checkbox" id="all2">全选&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="checkbox" id="reverse2">反选
 						  </td>
 						</tr>
 						<tr bgcolor="#FFFFFF">

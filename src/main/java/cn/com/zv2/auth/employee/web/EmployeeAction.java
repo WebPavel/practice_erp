@@ -5,6 +5,8 @@ import cn.com.zv2.auth.department.service.DepartmentService;
 import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.auth.employee.entity.EmployeeQueryModel;
 import cn.com.zv2.auth.employee.service.EmployeeService;
+import cn.com.zv2.auth.resource.entity.Resource;
+import cn.com.zv2.auth.resource.service.ResourceService;
 import cn.com.zv2.auth.role.entity.Role;
 import cn.com.zv2.auth.role.service.RoleService;
 import cn.com.zv2.util.WebUtils;
@@ -22,6 +24,7 @@ public class EmployeeAction extends BaseAction {
     private EmployeeService employeeService;
     private DepartmentService departmentService;
     private RoleService roleService;
+    private ResourceService resourceService;
 
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -33,6 +36,10 @@ public class EmployeeAction extends BaseAction {
 
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
+    }
+
+    public void setResourceService(ResourceService resourceService) {
+        this.resourceService = resourceService;
     }
 
     public String list() {
@@ -77,12 +84,19 @@ public class EmployeeAction extends BaseAction {
     public String login() {
         HttpServletRequest request = getRequest();
         String ip = WebUtils.getIPAddress(request);
-        Employee loginEmployee = employeeService.login(employee.getUsername(), employee.getPassword(), ip);
-        if (loginEmployee == null) {
+        Employee currEmployee = employeeService.login(employee.getUsername(), employee.getPassword(), ip);
+        if (currEmployee == null) {
             this.addActionError("登录失败，用户名密码错误！");
             return "loginFail";
         } else {
-            putSession(Employee.EMPLOYEE_LOGIN_USER_OBJECT_NAME, loginEmployee);
+            List<Resource> resourceListOfEmployee = resourceService.listByEmployee(currEmployee.getId());
+            StringBuilder resourceURL = new StringBuilder();
+            for (Resource resource : resourceListOfEmployee) {
+                resourceURL.append(resource.getUrl());
+                resourceURL.append(",");
+            }
+            currEmployee.setResourceURL(resourceURL.toString());
+            putSession(Employee.EMPLOYEE_LOGIN_USER_OBJECT_NAME, currEmployee);
             return "loginSuccess";
         }
     }

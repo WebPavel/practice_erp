@@ -50,4 +50,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <bean id="loginInterceptor" class="cn.com.zv2.util.interceptor.LoginInterceptor"/>
     <bean id="exceptionInterceptor" class="cn.com.zv2.util.interceptor.ExceptionInterceptor"/>
+    <bean id="authInterceptor" class="cn.com.zv2.util.interceptor.AuthInterceptor">
+        <property name="resourceService" ref="resourceService"/>
+    </bean>
 </beans>

@@ -749,7 +749,7 @@ public class GeneratorUtils {
         bufferedWriter.newLine();
         bufferedWriter.write("        <div style=\"margin:8px auto auto 12px;margin-top:6px\">");
         bufferedWriter.newLine();
-        bufferedWriter.write("            <span class=\"page_title\">" + uccClassName + "管理</span>");
+        bufferedWriter.write("            <span class=\"page_title\">管理</span>");
         bufferedWriter.newLine();
         bufferedWriter.write("        </div>");
         bufferedWriter.newLine();

@@ -56,6 +56,8 @@ public class Employee {
     private String gmtLastLoginView;
     // 登录次数
     private Integer loginCount;
+    // 辅助值
+    private String resourceURL;
     // 所属部门
     private Department department = new Department();
     // 角色列表
@@ -175,6 +177,14 @@ public class Employee {
 
     public void setLoginCount(Integer loginCount) {
         this.loginCount = loginCount;
+    }
+
+    public String getResourceURL() {
+        return resourceURL;
+    }
+
+    public void setResourceURL(String resourceURL) {
+        this.resourceURL = resourceURL;
     }
 
     public Department getDepartment() {

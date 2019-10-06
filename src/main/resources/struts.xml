@@ -12,9 +12,11 @@
         <interceptors>
             <interceptor name="loginInterceptor" class="loginInterceptor"/>
             <interceptor name="exceptionInterceptor" class="exceptionInterceptor"/>
+            <interceptor name="authInterceptor" class="authInterceptor"/>
             <interceptor-stack name="systemStack">
                 <interceptor-ref name="exceptionInterceptor"/>
                 <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="authInterceptor"/>
                 <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
         </interceptors>
