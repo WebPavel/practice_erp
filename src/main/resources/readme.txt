@@ -1,0 +1,12 @@
+<Resource
+name="jdbc/DataSource"
+auth="Container"
+type="javax.sql.DataSource"
+maxActive="100"
+maxIdle="30"
+maxWait="10000"
+url="jdbc:mysql://localhost:3306/practice_erp"
+driverClassName="com.mysql.jdbc.Driver"
+username="root"
+password="123456"
+/>
