@@ -16,4 +16,7 @@ public interface BaseDao<T> {
     List<T> list(T queryModel, int pageNum, int pageSize);
     Long count();
     Long count(T queryModel);
+    List<Object[]> executeSql(String sql, Object[] params);
+    void batchUpdate(String sqlTemplate, List<Object[]> list);
+    void batchUpdate(String sqlTemplate, Object fieldValue, Serializable[] ids);
 }

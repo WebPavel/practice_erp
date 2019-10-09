@@ -1,8 +1,11 @@
 package cn.com.zv2.core.dao;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.jdbc.Work;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -12,6 +15,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -74,6 +80,86 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport {
         return count.get(0);
     }
 
+    public List<Object[]> executeSql(String sql, Object[] params) {
+        Session session = super.getSession();
+        SQLQuery query = session.createSQLQuery(sql);
+        for (int i = 0, len = params.length; i < len; i++) {
+            query.setParameter(i, params[i]);
+        }
+        return query.list();
+    }
+
+    public void batchUpdate(String sqlTemplate, List<Object[]> list) {
+        Session session = super.getSession();
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                PreparedStatement pstatement = null;
+                try {
+                    pstatement = connection.prepareStatement(sqlTemplate);
+                    connection.setAutoCommit(false);
+                    Object[] objects = null;
+                    for (int i = 0, size = list.size(); i < size; i++) {
+                        objects = list.get(i);
+                        for (int j = 0, length = objects.length; j < length; j++) {
+                            pstatement.setObject(j + 1, objects[j]);
+                        }
+                        pstatement.addBatch();
+                    }
+                    pstatement.executeBatch();
+                    connection.commit();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    try {
+                        connection.rollback();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                } finally {
+                    try {
+                        pstatement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    public void batchUpdate(String sqlTemplate, Object fieldValue, Serializable[] ids) {
+        Session session = super.getSession();
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                PreparedStatement pstatement = null;
+                try {
+                    pstatement = connection.prepareStatement(sqlTemplate);
+                    connection.setAutoCommit(false);
+                    for (int i = 0, length = ids.length; i < length; i++) {
+                        pstatement.setObject(1, fieldValue);
+                        pstatement.setObject(2, ids[i]);
+                        pstatement.addBatch();
+                    }
+                    pstatement.executeBatch();
+                    connection.commit();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    try {
+                        connection.rollback();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                } finally {
+                    try {
+                        pstatement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
     private void doQbc(DetachedCriteria detachedCriteria, T queryModel) {
         Field[] fields = entityClass.getDeclaredFields();
         for (Field field : fields) {
@@ -121,4 +207,5 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport {
             }
         }
     }
+
 }
