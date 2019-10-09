@@ -8,7 +8,7 @@
         </id>
         <property name="name" />
         <property name="code" />
-        <set name="resourceSet" table="role_resource">
+        <set name="resources" table="role_resource">
             <key column="roleId"></key>
             <many-to-many column="resourceId" class="cn.com.zv2.auth.resource.entity.Resource"></many-to-many>
         </set>

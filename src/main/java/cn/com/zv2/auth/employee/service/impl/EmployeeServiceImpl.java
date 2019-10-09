@@ -90,13 +90,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void save(Employee employee, Long[] roleIds) {
-        Set<Role> roleSet = new HashSet<>();
+        Set<Role> roles = new HashSet<>();
         for (Long roleId : roleIds) {
             Role role = new Role();
             role.setId(roleId);
-            roleSet.add(role);
+            roles.add(role);
         }
-        employee.setRoleSet(roleSet);
+        employee.setRoles(roles);
         // check username
         if (employee.getUsername() == null || employee.getUsername().trim().length() == 0) {
             throw new ApplicationException("INFO_EMPLOYEE_USERNAME_IS_EMPTY");
@@ -124,13 +124,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeSnapshoot.setAddress(employee.getAddress());
         employeeSnapshoot.setDepartment(employee.getDepartment());
 
-        Set<Role> roleSet = new HashSet<>();
+        Set<Role> roles = new HashSet<>();
         for (Long roleId : roleIds) {
             Role role = new Role();
             role.setId(roleId);
-            roleSet.add(role);
+            roles.add(role);
         }
-        employeeSnapshoot.setRoleSet(roleSet);
+        employeeSnapshoot.setRoles(roles);
     }
 
 }

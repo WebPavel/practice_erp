@@ -54,25 +54,25 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void save(Role role, Long[] resourceIds) {
-        Set<Resource> resourceSet = new HashSet<>();
+        Set<Resource> resources = new HashSet<>();
         for (Long resourceId : resourceIds) {
             Resource resource = new Resource();
             resource.setId(resourceId);
-            resourceSet.add(resource);
+            resources.add(resource);
         }
-        role.setResourceSet(resourceSet);
+        role.setResources(resources);
         roleDao.save(role);
     }
 
     @Override
     public void update(Role role, Long[] resourceIds) {
-        Set<Resource> resourceSet = new HashSet<>();
+        Set<Resource> resources = new HashSet<>();
         for (Long resourceId : resourceIds) {
             Resource resource = new Resource();
             resource.setId(resourceId);
-            resourceSet.add(resource);
+            resources.add(resource);
         }
-        role.setResourceSet(resourceSet);
+        role.setResources(resources);
         roleDao.update(role);
     }
 }

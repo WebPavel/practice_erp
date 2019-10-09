@@ -1,6 +1,7 @@
 package cn.com.zv2.core.generator;
 
 import cn.com.zv2.auth.employee.entity.Employee;
+import cn.com.zv2.auth.menu.entity.Menu;
 import cn.com.zv2.auth.resource.entity.Resource;
 import cn.com.zv2.auth.role.entity.Role;
 
@@ -785,9 +786,9 @@ public class GeneratorUtils {
             }
             bufferedWriter.write("                        <tr bgcolor=\"#FFFFFF\">");
             bufferedWriter.newLine();
-            bufferedWriter.write("                            <td width=\"%\" align=\"center\">:</td>");
+            bufferedWriter.write("                            <td width=\"18%\" height=\"30\" align=\"center\">:</td>");
             bufferedWriter.newLine();
-            bufferedWriter.write("                            <td width=\"%\">");
+            bufferedWriter.write("                            <td width=\"82%\" colspan=\"3\">");
             bufferedWriter.newLine();
             bufferedWriter.write("                                <s:textfield name=\"" + lccClassName + "." + fieldName + "\" size=\"25\"/>");
             bufferedWriter.newLine();
@@ -852,7 +853,7 @@ public class GeneratorUtils {
 
     public static void main(String[] args) throws IOException {
         preGenerateDirectory();
-        new GeneratorUtils(Resource.class);
+        new GeneratorUtils(Menu.class);
         System.out.println("struts.xml不推荐自动生成");
         System.out.println("xxx.hbm.xml未添加关联关系");
         System.out.println("QueryModel未添加自定义范围查询条件");

@@ -1,0 +1,18 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.auth.menu.entity.Menu" table="menu">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="name" />
+        <property name="url" />
+
+        <many-to-one name="parent" class="cn.com.zv2.auth.menu.entity.Menu" column="parentId"/>
+        <set name="children" cascade="delete" inverse="true">
+            <key column="parentId"></key>
+            <one-to-many class="cn.com.zv2.auth.menu.entity.Menu"/>
+        </set>
+    </class>
+</hibernate-mapping>

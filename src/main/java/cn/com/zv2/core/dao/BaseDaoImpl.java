@@ -96,19 +96,19 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport {
                         }
                         if (field.isAnnotationPresent(Between.class)) {
                             StringBuilder otherFieldName = new StringBuilder();
+                            otherFieldName.append("to");
                             otherFieldName.append(field.getName());
-                            otherFieldName.append("2");
                             Field otherField = entityClass.getDeclaredField(otherFieldName.toString());
                             otherField.setAccessible(true);
-                            Object between2 = otherField.get(queryModel);
-                            if (value != null && between2 != null) {
-                                detachedCriteria.add(Restrictions.between(field.getName(), value, between2));
+                            Object toValue = otherField.get(queryModel);
+                            if (value != null && toValue != null) {
+                                detachedCriteria.add(Restrictions.between(field.getName(), value, toValue));
                                 continue;
                             } else if (value != null) {
                                 detachedCriteria.add(Restrictions.ge(field.getName(), value));
                                 continue;
                             } else {
-                                detachedCriteria.add(Restrictions.le(field.getName(), between2));
+                                detachedCriteria.add(Restrictions.le(field.getName(), toValue));
                                 continue;
                             }
                         }

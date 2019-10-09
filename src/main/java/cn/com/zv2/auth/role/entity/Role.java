@@ -2,7 +2,6 @@ package cn.com.zv2.auth.role.entity;
 
 import cn.com.zv2.auth.resource.entity.Resource;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,7 +13,7 @@ public class Role {
     private Long id;
     private String name;
     private String code;
-    private Set<Resource> resourceSet = new HashSet<>();
+    private Set<Resource> resources;
 
     public Long getId() {
         return id;
@@ -40,11 +39,11 @@ public class Role {
         this.code = code;
     }
 
-    public Set<Resource> getResourceSet() {
-        return resourceSet;
+    public Set<Resource> getResources() {
+        return resources;
     }
 
-    public void setResourceSet(Set<Resource> resourceSet) {
-        this.resourceSet = resourceSet;
+    public void setResources(Set<Resource> resources) {
+        this.resources = resources;
     }
 }

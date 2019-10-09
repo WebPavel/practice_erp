@@ -37,9 +37,9 @@ public class RoleAction extends BaseAction {
         put("resourceList", resourceList);
         if (role.getId() != null) {
             role = roleService.get(role.getId());
-            resourceIds = new Long[role.getResourceSet().size()];
+            resourceIds = new Long[role.getResources().size()];
             int i = 0;
-            for (Resource resource : role.getResourceSet()) {
+            for (Resource resource : role.getResources()) {
                 resourceIds[i++] = resource.getId();
             }
         }

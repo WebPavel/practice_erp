@@ -58,9 +58,9 @@ public class EmployeeAction extends BaseAction {
         put("departmentList", departmentList);
         if (employee.getId() != null) {
             employee = employeeService.get(employee.getId());
-            roleIds = new Long[employee.getRoleSet().size()];
+            roleIds = new Long[employee.getRoles().size()];
             int i = 0;
-            for (Role role : employee.getRoleSet()) {
+            for (Role role : employee.getRoles()) {
                 roleIds[i++] = role.getId();
             }
         }

@@ -18,7 +18,7 @@
         <property name="gmtLastLogin" />
         <property name="loginCount" />
         <many-to-one name="department" class="cn.com.zv2.auth.department.entity.Department" column="departmentId"></many-to-one>
-        <set name="roleSet" table="employee_role">
+        <set name="roles" table="employee_role">
             <key column="employeeId"></key>
             <many-to-many column="roleId" class="cn.com.zv2.auth.role.entity.Role"></many-to-many>
         </set>

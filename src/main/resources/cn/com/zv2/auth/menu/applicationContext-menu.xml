@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="menuAction" class="cn.com.zv2.auth.menu.web.MenuAction" scope="prototype">
+        <property name="menuService" ref="menuService"/>
+    </bean>
+    <!--Service-->
+    <bean id="menuService" class="cn.com.zv2.auth.menu.service.impl.MenuServiceImpl">
+        <property name="menuDao" ref="menuDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="menuDao" class="cn.com.zv2.auth.menu.dao.impl.MenuDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>
