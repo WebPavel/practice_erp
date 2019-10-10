@@ -12,5 +12,10 @@
             <key column="roleId"></key>
             <many-to-many column="resourceId" class="cn.com.zv2.auth.resource.entity.Resource"></many-to-many>
         </set>
+
+        <set name="menus" table="role_menu">
+            <key column="roleId"></key>
+            <many-to-many column="menuId" class="cn.com.zv2.auth.menu.entity.Menu"/>
+        </set>
     </class>
 </hibernate-mapping>

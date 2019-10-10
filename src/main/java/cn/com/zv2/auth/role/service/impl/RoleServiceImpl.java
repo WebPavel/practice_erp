@@ -1,5 +1,6 @@
 package cn.com.zv2.auth.role.service.impl;
 
+import cn.com.zv2.auth.menu.entity.Menu;
 import cn.com.zv2.auth.resource.entity.Resource;
 import cn.com.zv2.auth.role.dao.RoleDao;
 import cn.com.zv2.auth.role.entity.Role;
@@ -53,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void save(Role role, Long[] resourceIds) {
+    public void save(Role role, Long[] resourceIds, Long[] menuIds) {
         Set<Resource> resources = new HashSet<>();
         for (Long resourceId : resourceIds) {
             Resource resource = new Resource();
@@ -61,11 +62,20 @@ public class RoleServiceImpl implements RoleService {
             resources.add(resource);
         }
         role.setResources(resources);
+
+        Set<Menu> menus = new HashSet<>();
+        for (Long menuId : menuIds) {
+            Menu menu = new Menu();
+            menu.setId(menuId);
+            menus.add(menu);
+        }
+        role.setMenus(menus);
+
         roleDao.save(role);
     }
 
     @Override
-    public void update(Role role, Long[] resourceIds) {
+    public void update(Role role, Long[] resourceIds, Long[] menuIds) {
         Set<Resource> resources = new HashSet<>();
         for (Long resourceId : resourceIds) {
             Resource resource = new Resource();
@@ -73,6 +83,15 @@ public class RoleServiceImpl implements RoleService {
             resources.add(resource);
         }
         role.setResources(resources);
+
+        Set<Menu> menus = new HashSet<>();
+        for (Long menuId : menuIds) {
+            Menu menu = new Menu();
+            menu.setId(menuId);
+            menus.add(menu);
+        }
+        role.setMenus(menus);
+
         roleDao.update(role);
     }
 }

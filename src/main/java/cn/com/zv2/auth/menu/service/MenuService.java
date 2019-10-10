@@ -15,7 +15,7 @@ public interface MenuService extends BaseService<Menu> {
      */
     List<Menu> listLevel1Menu();
 
-    void save(Menu menu, Long parentId);
+    void save(Menu menu, Long parentId, Long[] roleIds);
 
-    void update(Menu menu, Long parentId);
+    void update(Menu menu, Long parentId, Long[] roleIds);
 }

@@ -3,10 +3,13 @@ package cn.com.zv2.auth.menu.service.impl;
 import cn.com.zv2.auth.menu.dao.MenuDao;
 import cn.com.zv2.auth.menu.entity.Menu;
 import cn.com.zv2.auth.menu.service.MenuService;
+import cn.com.zv2.auth.role.entity.Role;
 import cn.com.zv2.util.base.BaseQueryModel;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MenuServiceImpl implements MenuService {
 
@@ -56,15 +59,23 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void save(Menu menu, Long parentId) {
+    public void save(Menu menu, Long parentId, Long[] roleIds) {
         Menu parent = new Menu();
         parent.setId(parentId);
         menu.setParent(parent);
+
+        Set<Role> roles = new HashSet<>();
+        for (Long roleId : roleIds) {
+            Role role = new Role();
+            role.setId(roleId);
+            roles.add(role);
+        }
+        menu.setRoles(roles);
         menuDao.save(menu);
     }
 
     @Override
-    public void update(Menu menu, Long parentId) {
+    public void update(Menu menu, Long parentId, Long[] roleIds) {
         // 快照更新
         Menu menuSnapshot = menuDao.get(menu.getId());
         menuSnapshot.setName(menu.getName());
@@ -73,6 +84,14 @@ public class MenuServiceImpl implements MenuService {
         Menu parent = new Menu();
         parent.setId(parentId);
         menuSnapshot.setParent(parent);
+
+        Set<Role> roles = new HashSet<>();
+        for (Long roleId : roleIds) {
+            Role role = new Role();
+            role.setId(roleId);
+            roles.add(role);
+        }
+        menuSnapshot.setRoles(roles);
     }
 
 }

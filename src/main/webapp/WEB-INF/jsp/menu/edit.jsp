@@ -7,6 +7,25 @@
         $("#commit").click(function () {
             $("form:first").submit();
         });
+        $("#all").click(function() {
+            $("[name=roleIds]").prop("checked", $(this).prop("checked"));
+        });
+        $("#reverse").click(function() {
+            $("[name=roleIds]").each(function() {
+                $(this).prop("checked", !$(this).prop("checked"));
+            });
+            checkSelect();
+        });
+        $("[name=roleIds]").click(function() {
+            checkSelect();
+        });
+        function checkSelect() {
+            var checked = true;
+            $("[name=roleIds]").each(function() {
+                checked = checked && $(this).prop("checked");
+            });
+            $("#all").prop("checked", checked);
+        }
     });
 </script>
 <div class="content-right">
@@ -42,6 +61,22 @@
                             <td width="18%" height="30" align="center">所属菜单:</td>
                             <td width="82%" colspan="3">
                                 <s:select name="parentId" list="parentList" listKey="id" listValue="name" cssStyle="width: 190px"></s:select>
+                            </td>
+                        </tr>
+                        <tr  bgcolor="#FFFFFF">
+                            <td colspan="4">&nbsp;</td>
+                        </tr>
+                        <tr  bgcolor="#FFFFFF">
+                            <td width="18%" height="30" align="center">角色名称</td>
+                            <td width="82%" colspan="3">
+                                <input type="checkbox" id="all">全选&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" id="reverse">反选
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td width="18%" height="30" align="center">&nbsp;</td>
+                            <td width="82%" colspan="3">
+                                <s:checkboxlist name="roleIds" list="roleList" listKey="id" listValue="name"></s:checkboxlist>
                             </td>
                         </tr>
                         <tr bgcolor="#FFFFFF">

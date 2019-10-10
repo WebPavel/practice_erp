@@ -1,5 +1,6 @@
 package cn.com.zv2.auth.role.entity;
 
+import cn.com.zv2.auth.menu.entity.Menu;
 import cn.com.zv2.auth.resource.entity.Resource;
 
 import java.util.Set;
@@ -14,6 +15,7 @@ public class Role {
     private String name;
     private String code;
     private Set<Resource> resources;
+    private Set<Menu> menus;
 
     public Long getId() {
         return id;
@@ -46,4 +48,13 @@ public class Role {
     public void setResources(Set<Resource> resources) {
         this.resources = resources;
     }
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
+    }
+
 }

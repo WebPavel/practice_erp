@@ -6,6 +6,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <!--Action-->
     <bean id="menuAction" class="cn.com.zv2.auth.menu.web.MenuAction" scope="prototype">
         <property name="menuService" ref="menuService"/>
+        <property name="roleService" ref="roleService"/>
     </bean>
     <!--Service-->
     <bean id="menuService" class="cn.com.zv2.auth.menu.service.impl.MenuServiceImpl">

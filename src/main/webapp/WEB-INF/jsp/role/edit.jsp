@@ -11,17 +11,37 @@
 			$("[name=resourceIds]:checkbox").each(function() {
                 $(this).prop("checked", !$(this).prop("checked"));
             });
-			checkSelect();
+			checkSelect1();
 		});
         $("[name=resourceIds]").click(function() {
-            checkSelect();
+            checkSelect1();
         });
-        function checkSelect() {
+        function checkSelect1() {
             var checked = true;
             $("[name=resourceIds]").each(function() {
                 checked = checked && $(this).prop("checked");
             });
             $("#all").prop("checked", checked);
+        }
+
+        $("#all2").click(function() {
+            $("[name=menuIds]:checkbox").prop("checked", $(this).prop("checked"));
+        });
+        $("#reverse2").click(function() {
+            $("[name=menuIds]:checkbox").each(function() {
+                $(this).prop("checked", !$(this).prop("checked"));
+            });
+            checkSelect2();
+        });
+        $("[name=menuIds]").click(function() {
+            checkSelect2();
+        });
+        function checkSelect2() {
+            var checked = true;
+            $("[name=menuIds]").each(function() {
+                checked = checked && $(this).prop("checked");
+            });
+            $("#all2").prop("checked", checked);
         }
 	});
 </script>
@@ -78,10 +98,7 @@
 						<tr bgcolor="#FFFFFF">
 						  <td width="18%" height="30" align="center">&nbsp;</td>
 						  <td width="82%" colspan="3">
-							<input type="checkbox"/>基础维护
-							<input type="checkbox"/>部门维护
-							<input type="checkbox"/>员工维护
-							<input type="checkbox"/>.....
+							<s:checkboxlist name="menuIds" list="menuList" listKey="id" listValue="name"></s:checkboxlist>
 						  </td>
 						</tr>
 						<tr bgcolor="#FFFFFF">

@@ -1,5 +1,7 @@
 package cn.com.zv2.auth.menu.entity;
 
+import cn.com.zv2.auth.role.entity.Role;
+
 import java.util.Set;
 
 /**
@@ -17,6 +19,7 @@ public class Menu {
     /** 父菜单 */
     private Menu parent;
     private Set<Menu> children;
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -58,4 +61,11 @@ public class Menu {
         this.children = children;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }

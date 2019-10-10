@@ -7,6 +7,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="roleAction" class="cn.com.zv2.auth.role.web.RoleAction" scope="prototype">
         <property name="roleService" ref="roleService"/>
         <property name="resourceService" ref="resourceService"/>
+        <property name="menuService" ref="menuService"/>
     </bean>
     <!--Service-->
     <bean id="roleService" class="cn.com.zv2.auth.role.service.impl.RoleServiceImpl">

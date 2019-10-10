@@ -14,5 +14,10 @@
             <key column="parentId"></key>
             <one-to-many class="cn.com.zv2.auth.menu.entity.Menu"/>
         </set>
+        <!--与角色多对多-->
+        <set name="roles" table="role_menu">
+            <key column="menuId"></key>
+            <many-to-many column="roleId" class="cn.com.zv2.auth.role.entity.Role"/>
+        </set>
     </class>
 </hibernate-mapping>
