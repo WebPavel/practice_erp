@@ -18,6 +18,7 @@ import java.util.List;
 public class EmployeeAction extends BaseAction {
 
     public String newPassword;
+    public Long departmentId;
     public Long[] roleIds;
     public Employee employee = new Employee();
     public EmployeeQueryModel employeeQueryModel = new EmployeeQueryModel();
@@ -58,6 +59,9 @@ public class EmployeeAction extends BaseAction {
         put("departmentList", departmentList);
         if (employee.getId() != null) {
             employee = employeeService.get(employee.getId());
+            if (employee.getDepartment() != null) {
+                departmentId = employee.getDepartment().getId();
+            }
             roleIds = new Long[employee.getRoles().size()];
             int i = 0;
             for (Role role : employee.getRoles()) {
@@ -69,9 +73,9 @@ public class EmployeeAction extends BaseAction {
 
     public String updateIfPresent() {
         if (employee.getId() == null) {
-            employeeService.save(employee, roleIds);
+            employeeService.save(employee, departmentId, roleIds);
         } else {
-            employeeService.update(employee, roleIds);
+            employeeService.update(employee, departmentId, roleIds);
         }
         return REDIRECT_LIST;
     }

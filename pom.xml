@@ -17,6 +17,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <struts.version>2.3.7</struts.version>
   </properties>
 
   <dependencies>
@@ -30,12 +31,12 @@
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-core</artifactId>
-      <version>2.3.15.3</version>
+      <version>${struts.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.struts.xwork</groupId>
       <artifactId>xwork-core</artifactId>
-      <version>2.3.15.3</version>
+      <version>${struts.version}</version>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
@@ -55,7 +56,7 @@
     <dependency>
       <groupId>ognl</groupId>
       <artifactId>ognl</artifactId>
-      <version>3.0.6</version>
+      <version>3.0.5</version>
     </dependency>
     <dependency>
       <groupId>javassist</groupId>
@@ -95,12 +96,12 @@
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-spring-plugin</artifactId>
-      <version>2.3.15.3</version>
+      <version>${struts.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-json-plugin</artifactId>
-      <version>2.3.15.3</version>
+      <version>${struts.version}</version>
     </dependency>
     <!--spring-->
     <dependency>
@@ -226,22 +227,19 @@
       <version>3.6.10.Final</version>
     </dependency>
     <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>javax.servlet.jsp-api</artifactId>
-      <version>2.3.3</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.0</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.0.1</version>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
+
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
@@ -256,13 +254,6 @@
       <groupId>com.alipay.sdk</groupId>
       <artifactId>alipay-sdk-java</artifactId>
       <version>3.7.4.ALL</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.16.20</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
 
@@ -314,14 +305,4 @@
       </resource>
     </resources>
   </build>
-  <distributionManagement>
-    <repository>
-      <id>releases</id>
-      <url>http://localhost:8081/nexus/content/repositories/releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>snapshots</id>
-      <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>

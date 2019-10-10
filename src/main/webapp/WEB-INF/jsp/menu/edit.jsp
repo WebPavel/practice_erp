@@ -39,9 +39,9 @@
                             </td>
                         </tr>
                         <tr bgcolor="#FFFFFF">
-                            <td width="18%" height="30" align="center">所属父菜单:</td>
+                            <td width="18%" height="30" align="center">所属菜单:</td>
                             <td width="82%" colspan="3">
-                                <s:select name="menu.parent.id" list="parentList" listKey="id" listValue="name" cssStyle="width: 190px"></s:select>
+                                <s:select name="parentId" list="parentList" listKey="id" listValue="name" cssStyle="width: 190px"></s:select>
                             </td>
                         </tr>
                         <tr bgcolor="#FFFFFF">

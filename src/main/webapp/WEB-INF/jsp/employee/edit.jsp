@@ -104,7 +104,7 @@
 					  </td>
 				      <td align="center">所属部门</td>
 				      <td>
-				      	<s:select name="employee.department.id" list="departmentList" listKey="id" listValue="name" cssStyle="width:190px"></s:select>
+				      	<s:select name="departmentId" list="departmentList" listKey="id" listValue="name" cssStyle="width:190px"></s:select>
 				      	<!-- listKey:描述了最终显示的select中的选项option的value属性
 				      	listValue:描述了最终显示的select中的选项option的对外显示字符串
 				      	<option value="listKey">listValue</option> -->

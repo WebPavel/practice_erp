@@ -54,7 +54,7 @@
 						</td>
 						<td>部门名称</td>
 						<td>
-							<s:select name="employeeQueryModel.department.id" list="departmentList" listKey="id" listValue="name" headerKey="-1" headerValue="----请选择----" cssClass="width"></s:select>
+							<s:select name="employeeQueryModel.departmentId" list="departmentList" listKey="id" listValue="name" headerKey="-1" headerValue="----请选择----" cssClass="width"></s:select>
 							<!-- employeeQueryModel对象的department属性的id属性 -->
 						</td>
 						<td><a id="query"><img src="${pageContext.request.contextPath}/image/can_b_01.gif" border="0" /></a></td>
@@ -92,7 +92,7 @@
                                 <td><s:property value="department.name"/></td>
                                 <td>******</td>
                                 <td>
-                                    <img src="/image/icon_3.gif" />
+                                    <img src="/image/icon_03.gif" />
                                     <span style="line-height:12px; text-align:center;">
                                         <s:a action="employee_edit" cssClass="edit">
                                             <s:param name="employee.id" value="id"/>

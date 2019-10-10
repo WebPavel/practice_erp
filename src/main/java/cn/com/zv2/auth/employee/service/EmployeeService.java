@@ -25,7 +25,7 @@ public interface EmployeeService extends BaseService<Employee> {
      */
     boolean changePwd(String username, String password, String newPassword);
 
-    void save(Employee employee, Long[] roleIds);
+    void save(Employee employee, Long departmentId, Long[] roleIds);
 
-    void update(Employee employee, Long[] roleIds);
+    void update(Employee employee, Long departmentId, Long[] roleIds);
 }

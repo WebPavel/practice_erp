@@ -9,6 +9,7 @@ import java.util.List;
 
 public class MenuAction extends BaseAction {
 
+    public Long parentId;
     public Menu menu = new Menu();
     public MenuQueryModel menuQueryModel = new MenuQueryModel();
     private MenuService menuService;
@@ -29,20 +30,20 @@ public class MenuAction extends BaseAction {
     public String edit() {
         List<Menu> parentList = menuService.listLevel1Menu();
         put("parentList", parentList);
-        if (menu.getParent() == null) {
-            menu.setParent(new Menu());
-        }
         if (menu.getId() != null) {
             menu = menuService.get(menu.getId());
+            if (menu.getParent() != null) {
+                parentId = menu.getParent().getId();
+            }
         }
         return EDIT;
     }
 
     public String updateIfPresent() {
         if (menu.getId() == null) {
-            menuService.save(menu);
+            menuService.save(menu, parentId);
         } else {
-            menuService.update(menu);
+            menuService.update(menu, parentId);
         }
         return REDIRECT_LIST;
     }

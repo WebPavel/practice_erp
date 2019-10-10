@@ -5,8 +5,18 @@ import cn.com.zv2.util.format.DateUtils;
 
 public class EmployeeQueryModel extends Employee implements BaseQueryModel {
 
+    private Long departmentId;
+
     private Long birthday2;
     private String birthday2View;
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
 
     public Long getBirthday2() {
         return birthday2;

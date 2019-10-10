@@ -20,8 +20,8 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu> implements MenuDao {
         if (menuQueryModel.getName() != null && menuQueryModel.getName().trim().length() > 0) {
             detachedCriteria.add(Restrictions.like("name", "%" + menuQueryModel.getName().trim() + "%"));
         }
-        if (menuQueryModel.getParent() != null && menuQueryModel.getParent().getId() != null && menuQueryModel.getParent().getId() != -1) {
-            detachedCriteria.add(Restrictions.eq("parent", menuQueryModel.getParent()));
+        if (menuQueryModel.getParentId() != null && menuQueryModel.getParentId() != -1) {
+            detachedCriteria.add(Restrictions.eq("parent.id", menuQueryModel.getParentId()));
         }
     }
 

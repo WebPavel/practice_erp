@@ -1,5 +1,6 @@
 package cn.com.zv2.auth.employee.service.impl;
 
+import cn.com.zv2.auth.department.entity.Department;
 import cn.com.zv2.auth.employee.dao.EmployeeDao;
 import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.auth.employee.service.EmployeeService;
@@ -89,7 +90,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void save(Employee employee, Long[] roleIds) {
+    public void save(Employee employee, Long departmentId, Long[] roleIds) {
+        Department department = new Department();
+        department.setId(departmentId);
+        employee.setDepartment(department);
         Set<Role> roles = new HashSet<>();
         for (Long roleId : roleIds) {
             Role role = new Role();
@@ -113,24 +117,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void update(Employee employee, Long[] roleIds) {
+    public void update(Employee employee, Long departmentId, Long[] roleIds) {
         // 快照更新
-        Employee employeeSnapshoot = employeeDao.get(employee.getId());
-        employeeSnapshoot.setName(employee.getName());
-        employeeSnapshoot.setEmail(employee.getEmail());
-        employeeSnapshoot.setTelephone(employee.getTelephone());
-        employeeSnapshoot.setGender(employee.getGender());
-        employeeSnapshoot.setBirthday(employee.getBirthday());
-        employeeSnapshoot.setAddress(employee.getAddress());
-        employeeSnapshoot.setDepartment(employee.getDepartment());
+        Employee employeeSnapshot = employeeDao.get(employee.getId());
+        employeeSnapshot.setName(employee.getName());
+        employeeSnapshot.setEmail(employee.getEmail());
+        employeeSnapshot.setTelephone(employee.getTelephone());
+        employeeSnapshot.setGender(employee.getGender());
+        employeeSnapshot.setBirthday(employee.getBirthday());
+        employeeSnapshot.setAddress(employee.getAddress());
+        employeeSnapshot.setDepartment(employee.getDepartment());
 
+        Department department = new Department();
+        department.setId(departmentId);
+        employeeSnapshot.setDepartment(department);
         Set<Role> roles = new HashSet<>();
         for (Long roleId : roleIds) {
             Role role = new Role();
             role.setId(roleId);
             roles.add(role);
         }
-        employeeSnapshoot.setRoles(roles);
+        employeeSnapshot.setRoles(roles);
     }
 
 }

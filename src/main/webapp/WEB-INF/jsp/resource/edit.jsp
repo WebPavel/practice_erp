@@ -12,7 +12,7 @@
 <div class="content-right">
     <div class="content-right-pic_w">
         <div style="margin:8px auto auto 12px;margin-top:6px">
-            <span class="page_title">Resource管理</span>
+            <span class="page_title">资源管理</span>
         </div>
     </div>
     <div class="content-text">

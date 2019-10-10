@@ -31,7 +31,7 @@
                         <td width="24%"><s:textfield name="menuQueryModel.name" size="18"/></td>
                         <td width="14%">所属菜单:</td>
                         <td width="23%">
-                            <s:select name="menuQueryModel.parent.id" list="parentList" listKey="id" listValue="name" headerKey="-1" headerValue="----请选择----" cssStyle="width: 190px"></s:select>
+                            <s:select name="menuQueryModel.parentId" list="parentList" listKey="id" listValue="name" headerKey="-1" headerValue="----请选择----" cssStyle="width: 190px"></s:select>
                         </td>
                         <td width="70">
                             <a id="query"><img src="${pageContext.request.contextPath}/image/can_b_01.gif" border="0"/></a>

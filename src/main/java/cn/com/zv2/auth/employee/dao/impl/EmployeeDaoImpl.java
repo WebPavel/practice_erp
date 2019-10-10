@@ -33,8 +33,8 @@ public class EmployeeDaoImpl extends BaseDaoImpl<Employee> implements EmployeeDa
         if (employeeQueryModel.getEmail() != null && employeeQueryModel.getEmail().trim().length() > 0) {
             detachedCriteria.add(Restrictions.like("email", "%" + employeeQueryModel.getEmail().trim() + "%"));
         }
-        if (employeeQueryModel.getDepartment() != null && employeeQueryModel.getDepartment().getId() != null && employeeQueryModel.getDepartment().getId() != -1) {
-            detachedCriteria.add(Restrictions.eq("department", employeeQueryModel.getDepartment()));
+        if (employeeQueryModel.getDepartmentId() != null && employeeQueryModel.getDepartmentId() != -1) {
+            detachedCriteria.add(Restrictions.eq("department.id", employeeQueryModel.getDepartmentId()));
         }
         if (employeeQueryModel.getBirthday() != null) {
             System.out.println(new Date(employeeQueryModel.getBirthday()));

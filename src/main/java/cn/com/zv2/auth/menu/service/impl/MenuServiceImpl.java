@@ -18,15 +18,10 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void save(Menu menu) {
-        menuDao.save(menu);
     }
 
     @Override
     public void update(Menu menu) {
-        // 快照更新
-        Menu currMenu = menuDao.get(menu.getId());
-        currMenu.setName(menu.getName());
-        currMenu.setUrl(menu.getUrl());
     }
 
     @Override
@@ -59,4 +54,25 @@ public class MenuServiceImpl implements MenuService {
     public List<Menu> listLevel1Menu() {
         return menuDao.listByParentIdIsOneOrZero();
     }
+
+    @Override
+    public void save(Menu menu, Long parentId) {
+        Menu parent = new Menu();
+        parent.setId(parentId);
+        menu.setParent(parent);
+        menuDao.save(menu);
+    }
+
+    @Override
+    public void update(Menu menu, Long parentId) {
+        // 快照更新
+        Menu menuSnapshot = menuDao.get(menu.getId());
+        menuSnapshot.setName(menu.getName());
+        menuSnapshot.setUrl(menu.getUrl());
+
+        Menu parent = new Menu();
+        parent.setId(parentId);
+        menuSnapshot.setParent(parent);
+    }
+
 }
