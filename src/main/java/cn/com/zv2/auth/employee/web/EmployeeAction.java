@@ -125,7 +125,7 @@ public class EmployeeAction extends BaseAction {
         }
     }
 
-    protected Employee getSessionEmployee() {
+    private Employee getSessionEmployee() {
         return (Employee) getSession(Employee.EMPLOYEE_LOGIN_USER_OBJECT_NAME);
     }
 

@@ -30,4 +30,16 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu> implements MenuDao {
         String hql = "from Menu where parent.id = ? or id = ?";
         return this.getHibernateTemplate().find(hql, Menu.MENU_SYSTEM_MENU_ID, Menu.MENU_SYSTEM_MENU_ID);
     }
+
+    @Override
+    public List<Menu> listLevel1MenuByEmployeeId(Long employeeId) {
+        String hql = "select distinct menu from Menu menu join menu.roles role join role.employees employee where employee.id = ? and menu.parent.id = ? order by menu.id";
+        return this.getHibernateTemplate().find(hql, employeeId, Menu.MENU_SYSTEM_MENU_ID);
+    }
+
+    @Override
+    public List<Menu> listByEmployeeIdAndParentId(Long employeeId, Long parentId) {
+        String hql = "select distinct menu from Menu menu join menu.roles role join role.employees employee where employee.id = ? and menu.parent.id = ? order by menu.id";
+        return this.getHibernateTemplate().find(hql, employeeId, parentId);
+    }
 }

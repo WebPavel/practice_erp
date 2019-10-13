@@ -1,5 +1,6 @@
 package cn.com.zv2.auth.role.entity;
 
+import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.auth.menu.entity.Menu;
 import cn.com.zv2.auth.resource.entity.Resource;
 
@@ -16,6 +17,7 @@ public class Role {
     private String code;
     private Set<Resource> resources;
     private Set<Menu> menus;
+    private Set<Employee> employees;
 
     public Long getId() {
         return id;
@@ -55,6 +57,14 @@ public class Role {
 
     public void setMenus(Set<Menu> menus) {
         this.menus = menus;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 
 }

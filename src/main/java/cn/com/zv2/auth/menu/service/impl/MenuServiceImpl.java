@@ -54,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> listLevel1Menu() {
+    public List<Menu> listSelectableMenu() {
         return menuDao.listByParentIdIsOneOrZero();
     }
 
@@ -92,6 +92,16 @@ public class MenuServiceImpl implements MenuService {
             roles.add(role);
         }
         menuSnapshot.setRoles(roles);
+    }
+
+    @Override
+    public List<Menu> listLevel1MenuByEmployee(Long employeeId) {
+        return menuDao.listLevel1MenuByEmployeeId(employeeId);
+    }
+
+    @Override
+    public List<Menu> listByEmployeeAndParent(Long employeeId, Long parentId) {
+        return menuDao.listByEmployeeIdAndParentId(employeeId, parentId);
     }
 
 }

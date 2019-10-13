@@ -8,4 +8,8 @@ import java.util.List;
 public interface MenuDao extends BaseDao<Menu> {
 
     List<Menu> listByParentIdIsOneOrZero();
+
+    List<Menu> listLevel1MenuByEmployeeId(Long employeeId);
+
+    List<Menu> listByEmployeeIdAndParentId(Long employeeId, Long parentId);
 }

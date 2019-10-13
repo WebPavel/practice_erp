@@ -17,5 +17,10 @@
             <key column="roleId"></key>
             <many-to-many column="menuId" class="cn.com.zv2.auth.menu.entity.Menu"/>
         </set>
+        <!--角色和员工多对多-->
+        <set name="employees" table="employee_role" inverse="true">
+            <key column="roleId"></key>
+            <many-to-many column="employeeId" class="cn.com.zv2.auth.employee.entity.Employee"/>
+        </set>
     </class>
 </hibernate-mapping>

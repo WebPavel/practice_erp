@@ -25,7 +25,7 @@ public class ResourceDaoImpl extends BaseDaoImpl<Resource> implements ResourceDa
 
     @Override
     public List<Resource> listByEmployeeId(Long id) {
-        String hql = "select resource from Employee employee join employee.roles role join role.resources resource where employee.id = ?";
+        String hql = "select distinct resource from Employee employee join employee.roles role join role.resources resource where employee.id = ?";
         return this.getHibernateTemplate().find(hql, id);
     }
 }
