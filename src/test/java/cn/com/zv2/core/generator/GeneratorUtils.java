@@ -1,9 +1,6 @@
 package cn.com.zv2.core.generator;
 
-import cn.com.zv2.auth.employee.entity.Employee;
-import cn.com.zv2.auth.menu.entity.Menu;
-import cn.com.zv2.auth.resource.entity.Resource;
-import cn.com.zv2.auth.role.entity.Role;
+import cn.com.zv2.invoice.category.entity.Category;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -159,8 +156,10 @@ public class GeneratorUtils {
                         Double.class.equals(fields[i].getType()) ||
                         Date.class.equals(fields[i].getType()) ||
                         BigDecimal.class.equals(fields[i].getType())) {
-                    bufferedWriter.write("        <property name=\"" + fields[i].getName() + "\" />");
-                    bufferedWriter.newLine();
+                    if (!fields[i].getName().endsWith("View")) {
+                        bufferedWriter.write("        <property name=\"" + fields[i].getName() + "\" />");
+                        bufferedWriter.newLine();
+                    }
                 }
             }
         }
@@ -853,7 +852,7 @@ public class GeneratorUtils {
 
     public static void main(String[] args) throws IOException {
         preGenerateDirectory();
-        new GeneratorUtils(Menu.class);
+        new GeneratorUtils(Category.class);
         System.out.println("struts.xml不推荐自动生成");
         System.out.println("xxx.hbm.xml未添加关联关系");
         System.out.println("QueryModel未添加自定义范围查询条件");

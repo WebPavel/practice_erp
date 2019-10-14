@@ -1,0 +1,12 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.invoice.category.entity.Category" table="category">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="name" />
+        <many-to-one name="supplier" class="cn.com.zv2.invoice.supplier.entity.Supplier" column="supplierId"/>
+    </class>
+</hibernate-mapping>

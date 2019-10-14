@@ -163,7 +163,7 @@ public class Employee {
 
     public void setGmtLastLogin(Long gmtLastLogin) {
         this.gmtLastLogin = gmtLastLogin;
-        this.gmtLastLoginView = DateUtils.formatDate(this.gmtLastLogin);
+        this.gmtLastLoginView = DateUtils.formatDateTime(this.gmtLastLogin);
     }
 
     public String getGmtLastLoginView() {

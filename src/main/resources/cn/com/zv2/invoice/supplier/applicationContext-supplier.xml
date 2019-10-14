@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="supplierAction" class="cn.com.zv2.invoice.supplier.web.SupplierAction" scope="prototype">
+        <property name="supplierService" ref="supplierService"/>
+    </bean>
+    <!--Service-->
+    <bean id="supplierService" class="cn.com.zv2.invoice.supplier.service.impl.SupplierServiceImpl">
+        <property name="supplierDao" ref="supplierDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="supplierDao" class="cn.com.zv2.invoice.supplier.dao.impl.SupplierDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

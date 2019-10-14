@@ -90,7 +90,7 @@
                                 <td><s:property value="telephone"/></td>
                                 <td><s:property value="email"/></td>
                                 <td><s:property value="department.name"/></td>
-                                <td>******</td>
+                                <td><s:property value="gmtLastLoginView"/></td>
                                 <td>
                                     <img src="/image/icon_03.gif" />
                                     <span style="line-height:12px; text-align:center;">

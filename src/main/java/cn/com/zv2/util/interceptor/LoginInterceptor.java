@@ -11,7 +11,10 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
  * @date 2019/9/19 0:28
  */
 public class LoginInterceptor extends AbstractInterceptor {
+
     private static final String ALLOWED_URL = "cn.com.zv2.auth.employee.web.EmployeeAction.login";
+    private static final String ALLOWED_ACTION_URL = "login";
+
     @Override
     public String intercept(ActionInvocation invocation) throws Exception {
         System.out.println(">>>>>>>>>>>>>>>>");
@@ -19,6 +22,10 @@ public class LoginInterceptor extends AbstractInterceptor {
         String methodName = invocation.getProxy().getMethod();
         String qualifiedName = actionName + "." + methodName;
         System.out.println(qualifiedName);
+        String callOptName = invocation.getProxy().getActionName();
+        if (ALLOWED_ACTION_URL.equals(callOptName)) {
+            return invocation.invoke();
+        }
         if (ALLOWED_URL.equals(qualifiedName)) {
             return invocation.invoke();
         }
@@ -28,4 +35,5 @@ public class LoginInterceptor extends AbstractInterceptor {
         }
         return invocation.invoke();
     }
+
 }

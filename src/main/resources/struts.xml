@@ -22,7 +22,9 @@
         </interceptors>
         <default-interceptor-ref name="systemStack"/>
         <global-results>
-            <result name="login">/WEB-INF/jsp/login.jsp</result>
+            <!--forward.jsp页面废弃，使用index.jsp代替，做全屏显示用-->
+            <!--<result name="login">/WEB-INF/jsp/forward.jsp</result>-->
+            <result name="login">index.jsp</result>
             <result name="error">/WEB-INF/jsp/error.jsp</result>
             <result name="edit">/WEB-INF/jsp/${actionName}/edit.jsp</result>
             <result name="list">/WEB-INF/jsp/${actionName}/list.jsp</result>
@@ -60,6 +62,14 @@
 
         <!--Menu-->
         <action name="menu_*" class="menuAction" method="{1}">
+        </action>
+
+        <!--Supplier-->
+        <action name="supplier_*" class="supplierAction" method="{1}">
+        </action>
+
+        <!--Category-->
+        <action name="category_*" class="categoryAction" method="{1}">
         </action>
 
     </package>
