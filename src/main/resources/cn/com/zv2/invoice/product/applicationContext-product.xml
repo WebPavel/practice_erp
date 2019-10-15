@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="productAction" class="cn.com.zv2.invoice.product.web.ProductAction" scope="prototype">
+        <property name="productService" ref="productService"/>
+        <property name="supplierService" ref="supplierService"/>
+        <property name="categoryService" ref="categoryService"/>
+    </bean>
+    <!--Service-->
+    <bean id="productService" class="cn.com.zv2.invoice.product.service.impl.ProductServiceImpl">
+        <property name="productDao" ref="productDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="productDao" class="cn.com.zv2.invoice.product.dao.impl.ProductDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

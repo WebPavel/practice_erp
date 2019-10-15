@@ -40,10 +40,10 @@ public class EmployeeDaoImpl extends BaseDaoImpl<Employee> implements EmployeeDa
             System.out.println(new Date(employeeQueryModel.getBirthday()));
             detachedCriteria.add(Restrictions.ge("birthday", employeeQueryModel.getBirthday()));
         }
-        if (employeeQueryModel.getBirthday2() != null) {
-            System.out.println(new Date(employeeQueryModel.getBirthday2()));
-            System.out.println(new Date(employeeQueryModel.getBirthday2() + lastMillisOfDay));
-            detachedCriteria.add(Restrictions.le("birthday", employeeQueryModel.getBirthday2() + lastMillisOfDay));
+        if (employeeQueryModel.getToBirthday() != null) {
+            System.out.println(new Date(employeeQueryModel.getToBirthday()));
+            System.out.println(new Date(employeeQueryModel.getToBirthday() + lastMillisOfDay));
+            detachedCriteria.add(Restrictions.le("birthday", employeeQueryModel.getToBirthday() + lastMillisOfDay));
         }
     }
 

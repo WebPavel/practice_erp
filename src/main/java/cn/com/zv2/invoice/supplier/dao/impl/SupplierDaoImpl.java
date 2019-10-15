@@ -8,6 +8,8 @@ import cn.com.zv2.util.base.BaseQueryModel;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.List;
+
 public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements SupplierDao {
 
     @Override
@@ -25,5 +27,11 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements SupplierDa
         if (supplierQueryModel.getDelivered() != null && supplierQueryModel.getDelivered() != -1) {
             detachedCriteria.add(Restrictions.eq("delivered", supplierQueryModel.getDelivered()));
         }
+    }
+
+    @Override
+    public List<Supplier> listUnionCategory() {
+        String hql = "select distinct supplier from Category category join category.supplier supplier";
+        return this.getHibernateTemplate().find(hql);
     }
 }

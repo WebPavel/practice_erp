@@ -8,7 +8,7 @@
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.ui.theme" value="simple"/>
     <constant name="struts.custom.i18n.resources" value="message"/>
-    <package name="default" namespace="/" extends="struts-default">
+    <package name="default" namespace="/" extends="json-default">
         <interceptors>
             <interceptor name="loginInterceptor" class="loginInterceptor"/>
             <interceptor name="exceptionInterceptor" class="exceptionInterceptor"/>
@@ -70,6 +70,35 @@
 
         <!--Category-->
         <action name="category_*" class="categoryAction" method="{1}">
+            <result name="ajaxListBySupplier" type="json">
+                <!--返回数据过滤方式一-->
+                <!--表达式是一个正则表达式-->
+                <!--
+                <param name="includeProperties">
+                    categoryList\[\d+\]\.id,
+                    categoryList\[\d+\]\.name,
+                </param>
+                -->
+                <!--返回数据过滤方式二-->
+                <!--设置数据来源-->
+                <!--
+                <param name="root">categoryList</param>
+                <param name="includeProperties">
+                    \[\d+\]\.id,
+                    \[\d+\]\.name,
+                </param>
+                -->
+                <!--返回数据过滤方式三-->
+                <param name="root">action</param>
+                <param name="includeProperties">
+                    categoryList\[\d+\]\.id,
+                    categoryList\[\d+\]\.name,
+                </param>
+            </result>
+        </action>
+
+        <!--Product-->
+        <action name="product_*" class="productAction" method="{1}">
         </action>
 
     </package>

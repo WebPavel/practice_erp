@@ -14,8 +14,13 @@ public class CategoryAction extends BaseAction {
     public Long supplierId;
     public Category category = new Category();
     public CategoryQueryModel categoryQueryModel = new CategoryQueryModel();
+    private List<Category> categoryList;
     private CategoryService categoryService;
     private SupplierService supplierService;
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
 
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -64,6 +69,13 @@ public class CategoryAction extends BaseAction {
     public String delete() {
         categoryService.delete(category);
         return REDIRECT_LIST;
+    }
+
+    //============AJAX============
+
+    public String ajaxListBySupplier() {
+        categoryList = categoryService.listBySupplier(supplierId);
+        return "ajaxListBySupplier";
     }
 
 }

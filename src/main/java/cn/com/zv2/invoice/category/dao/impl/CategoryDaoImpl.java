@@ -8,6 +8,8 @@ import cn.com.zv2.util.base.BaseQueryModel;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.List;
+
 public class CategoryDaoImpl extends BaseDaoImpl<Category> implements CategoryDao {
 
     @Override
@@ -20,4 +22,11 @@ public class CategoryDaoImpl extends BaseDaoImpl<Category> implements CategoryDa
             detachedCriteria.add(Restrictions.eq("supplier", categoryQueryModel.getSupplier()));
         }
     }
+
+    @Override
+    public List<Category> listBySupplierId(Long supplierId) {
+        String hql = "from Category where supplier.id = ?";
+        return this.getHibernateTemplate().find(hql, supplierId);
+    }
+
 }

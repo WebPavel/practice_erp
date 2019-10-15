@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.invoice.product.entity.Product" table="product">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="name" />
+        <property name="origin" />
+        <property name="producer" />
+        <property name="unit" />
+        <property name="bid" />
+        <property name="price" />
+        <many-to-one name="category" class="cn.com.zv2.invoice.category.entity.Category" column="categoryId"/>
+    </class>
+</hibernate-mapping>

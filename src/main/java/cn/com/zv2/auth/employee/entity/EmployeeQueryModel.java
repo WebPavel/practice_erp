@@ -7,8 +7,8 @@ public class EmployeeQueryModel extends Employee implements BaseQueryModel {
 
     private Long departmentId;
 
-    private Long birthday2;
-    private String birthday2View;
+    private Long toBirthday;
+    private String toBirthdayView;
 
     public Long getDepartmentId() {
         return departmentId;
@@ -18,22 +18,22 @@ public class EmployeeQueryModel extends Employee implements BaseQueryModel {
         this.departmentId = departmentId;
     }
 
-    public Long getBirthday2() {
-        return birthday2;
+    public Long getToBirthday() {
+        return toBirthday;
     }
 
-    public void setBirthday2(Long birthday2) {
-        this.birthday2 = birthday2;
-        this.birthday2View = DateUtils.formatDate(this.birthday2);
+    public void setToBirthday(Long toBirthday) {
+        this.toBirthday = toBirthday;
+        this.toBirthdayView = DateUtils.formatDate(toBirthday);
     }
 
-    public String getBirthday2View() {
-        return birthday2View;
+    public String getToBirthdayView() {
+        return toBirthdayView;
     }
 
-    public void setBirthday2View(String birthday2View) {
-        this.birthday2View = birthday2View;
-        this.birthday2 = DateUtils.parse(this.birthday2View);
+    public void setToBirthdayView(String toBirthdayView) {
+        this.toBirthdayView = toBirthdayView;
+        this.toBirthday = DateUtils.parse(toBirthdayView);
     }
 
 }

@@ -51,4 +51,8 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierDao.count(baseQueryModel);
     }
 
+    @Override
+    public List<Supplier> listUnionCategory() {
+        return supplierDao.listUnionCategory();
+    }
 }

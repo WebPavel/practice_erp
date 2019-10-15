@@ -51,4 +51,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDao.count(baseQueryModel);
     }
 
+    @Override
+    public List<Category> listBySupplier(Long supplierId) {
+        return categoryDao.listBySupplierId(supplierId);
+    }
+
 }

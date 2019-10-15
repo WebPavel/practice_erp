@@ -44,13 +44,13 @@
 					<tr>
 						<td  height="30">电子邮件</td>
 						<td><s:textfield name="employeeQueryModel.email" size="14"/></td>
-						<td>出生日期</td>
+						<td>出生日期从</td>
 						<td>
 							<input name="employeeQueryModel.birthdayView" id="d4311" class="Wdate" type="text" size="14" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')||\'2020-10-01\'}'})" value="${employeeQueryModel.birthdayView}" readonly="readonly"/>
 						</td>
-						<td>出生日期</td>
+						<td>到</td>
 						<td>
-							<input name="employeeQueryModel.birthday2View" id="d4312" class="Wdate" type="text" size="14" onclick="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01'})" value="${employeeQueryModel.birthday2View}" readonly="readonly"/>
+							<input name="employeeQueryModel.toBirthdayView" id="d4312" class="Wdate" type="text" size="14" onclick="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01'})" value="${employeeQueryModel.toBirthdayView}" readonly="readonly"/>
 						</td>
 						<td>部门名称</td>
 						<td>
