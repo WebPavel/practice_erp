@@ -1,0 +1,10 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.invoice.order.entity.Order" table="biz_order">
+        <id name="id">
+            <generator class="native" />
+        </id>
+    </class>
+</hibernate-mapping>

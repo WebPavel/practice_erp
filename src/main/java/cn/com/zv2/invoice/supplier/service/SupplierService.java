@@ -15,4 +15,10 @@ public interface SupplierService extends BaseService<Supplier> {
      */
     List<Supplier> listUnionCategory();
 
+    /**
+     * 获取含有商品类别和商品的供应商列表
+     * @return
+     */
+    List<Supplier> listUnionCategoryAndProduct();
+
 }

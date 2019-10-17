@@ -9,4 +9,6 @@ public interface CategoryDao extends BaseDao<Category> {
 
     List<Category> listBySupplierId(Long supplierId);
 
+    List<Category> listNonNullProductBySupplierId(Long supplierId);
+
 }

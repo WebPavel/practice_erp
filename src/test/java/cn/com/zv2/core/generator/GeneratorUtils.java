@@ -1,6 +1,7 @@
 package cn.com.zv2.core.generator;
 
 import cn.com.zv2.invoice.category.entity.Category;
+import cn.com.zv2.invoice.order.entity.Order;
 import cn.com.zv2.invoice.product.entity.Product;
 
 import java.io.*;
@@ -853,7 +854,7 @@ public class GeneratorUtils {
 
     public static void main(String[] args) throws IOException {
         preGenerateDirectory();
-        new GeneratorUtils(Product.class);
+        new GeneratorUtils(Order.class);
         System.out.println("struts.xml不推荐自动生成");
         System.out.println("xxx.hbm.xml未添加关联关系");
         System.out.println("QueryModel未添加自定义范围查询条件");

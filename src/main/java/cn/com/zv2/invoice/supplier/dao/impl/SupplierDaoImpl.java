@@ -29,9 +29,24 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements SupplierDa
         }
     }
 
+    /**
+     * 注意去重复
+     * @return
+     */
     @Override
     public List<Supplier> listUnionCategory() {
         String hql = "select distinct supplier from Category category join category.supplier supplier";
         return this.getHibernateTemplate().find(hql);
     }
+
+    /**
+     * Attention: 去重!
+     * @return
+     */
+    @Override
+    public List<Supplier> listUnionCategoryAndProduct() {
+        String hql = "select distinct supplier from Product product join product.category category join category.supplier supplier";
+        return this.getHibernateTemplate().find(hql);
+    }
+
 }

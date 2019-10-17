@@ -55,4 +55,10 @@ public class SupplierServiceImpl implements SupplierService {
     public List<Supplier> listUnionCategory() {
         return supplierDao.listUnionCategory();
     }
+
+    @Override
+    public List<Supplier> listUnionCategoryAndProduct() {
+        return supplierDao.listUnionCategoryAndProduct();
+    }
+
 }

@@ -51,4 +51,9 @@ public class ProductServiceImpl implements ProductService {
         return productDao.count(baseQueryModel);
     }
 
+    @Override
+    public List<Product> listByCategory(Long categoryId) {
+        return productDao.listByCategoryId(categoryId);
+    }
+
 }

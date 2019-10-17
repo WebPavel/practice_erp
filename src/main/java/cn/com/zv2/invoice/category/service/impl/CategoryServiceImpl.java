@@ -56,4 +56,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDao.listBySupplierId(supplierId);
     }
 
+    @Override
+    public List<Category> listNonNullProductBySupplier(Long supplierId) {
+        return categoryDao.listNonNullProductBySupplierId(supplierId);
+    }
+
 }

@@ -101,5 +101,35 @@
         <action name="product_*" class="productAction" method="{1}">
         </action>
 
+        <!--Order-->
+        <action name="order_*" class="orderAction" method="{1}">
+            <result name="buyEdit">/WEB-INF/jsp/order/buy/edit.jsp</result>
+            <result name="buyList">/WEB-INF/jsp/order/buy/list.jsp</result>
+            <result name="sellEdit">/WEB-INF/jsp/order/sell/edit.jsp</result>
+            <result name="sellList">/WEB-INF/jsp/order/sell/list.jsp</result>
+            <result name="ajaxListCategoryAndProduct" type="json">
+                <param name="includeProperties">
+                    categoryList\[\d+\]\.id,
+                    categoryList\[\d+\]\.name,
+                    productList\[\d+\]\.id,
+                    productList\[\d+\]\.name,
+                    product\.bidView
+                </param>
+            </result>
+            <result name="ajaxListProductByCategory" type="json">
+                <param name="includeProperties">
+                    productList\[\d+\]\.id,
+                    productList\[\d+\]\.name,
+                    product\.bidView
+                </param>
+            </result>
+            <result name="ajaxGetProductPrice" type="json">
+                <param name="root">product</param>
+                <param name="includeProperties">
+                    bidView
+                </param>
+            </result>
+        </action>
+
     </package>
 </struts>

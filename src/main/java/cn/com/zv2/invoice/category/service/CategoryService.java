@@ -11,4 +11,11 @@ public interface CategoryService extends BaseService<Category> {
 
     List<Category> listBySupplier(Long supplierId);
 
+    /**
+     * 获取指定供应商对应的含有商品的类别列表
+     * @param supplierId 供应商ID
+     * @return
+     */
+    List<Category> listNonNullProductBySupplier(Long supplierId);
+
 }

@@ -29,4 +29,10 @@ public class CategoryDaoImpl extends BaseDaoImpl<Category> implements CategoryDa
         return this.getHibernateTemplate().find(hql, supplierId);
     }
 
+    @Override
+    public List<Category> listNonNullProductBySupplierId(Long supplierId) {
+        String hql = "select distinct category from Product product join product.category category where category.supplier.id = ?";
+        return this.getHibernateTemplate().find(hql, supplierId);
+    }
+
 }
