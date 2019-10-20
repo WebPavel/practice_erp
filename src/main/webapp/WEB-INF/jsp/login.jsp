@@ -18,7 +18,7 @@
                 $("form:first").submit();
             });
         });
-        function swapImage(srcObj, image_src) {
+        function swapImage(srcObj,image_src){
             srcObj.src=image_src;
         }
     </script>

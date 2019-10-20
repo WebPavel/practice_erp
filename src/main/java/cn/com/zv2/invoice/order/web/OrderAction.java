@@ -18,6 +18,7 @@ public class OrderAction extends BaseAction {
     public Long supplierId;
     public Long categoryId;
     public Long productId;
+    public String usedProductIds;
     private Product product;
     public Order order = new Order();
     public OrderQueryModel orderQueryModel = new OrderQueryModel();
@@ -115,6 +116,12 @@ public class OrderAction extends BaseAction {
         // 过滤含有商品的类别列表信息
         categoryList = categoryService.listNonNullProductBySupplier(supplierId);
         productList = productService.listByCategory(categoryList.get(0).getId());
+        for (int i = productList.size() - 1; i >= 0; i--) {
+            Long productId = productList.get(i).getId();
+            if (usedProductIds.contains("'" + productId + "'")) {
+                productList.remove(i);
+            }
+        }
         product = productList.get(0);
         return "ajaxListCategoryAndProduct";
     }
@@ -128,6 +135,32 @@ public class OrderAction extends BaseAction {
     public String ajaxGetProductPrice() {
         product = productService.get(productId);
         return "ajaxGetProductPrice";
+    }
+
+    public String ajaxListNewCategoryAndProduct() {
+        // 过滤含有商品的类别列表信息
+        // 添加商品前判断商品是否已出现在已存在商品列表里,如果存在剔除,
+        // 如果一个类别中所有商品都剔除，就将该商品类别也剔除
+        categoryList = categoryService.listNonNullProductBySupplier(supplierId);
+        Product:
+        for (int i = categoryList.size() - 1; i >= 0; i--) {
+            List<Product> productList = productService.listByCategory(categoryList.get(i).getId());
+            for (Product product : productList) {
+                if (!usedProductIds.contains("'" + product.getId() + "'")) {
+                    continue Product;
+                }
+            }
+            categoryList.remove(i);
+        }
+        productList = productService.listByCategory(categoryList.get(0).getId());
+        for (int i = productList.size() - 1; i >= 0; i--) {
+            Long productId = productList.get(i).getId();
+            if (usedProductIds.contains("'" + productId + "'")) {
+                productList.remove(i);
+            }
+        }
+        product = productList.get(0);
+        return "ajaxListNewCategoryAndProduct";
     }
 
 }

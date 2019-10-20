@@ -129,6 +129,15 @@
                     bidView
                 </param>
             </result>
+            <result name="ajaxListNewCategoryAndProduct" type="json">
+                <param name="includeProperties">
+                    categoryList\[\d+\]\.id,
+                    categoryList\[\d+\]\.name,
+                    productList\[\d+\]\.id,
+                    productList\[\d+\]\.name,
+                    product\.bidView
+                </param>
+            </result>
         </action>
 
     </package>
