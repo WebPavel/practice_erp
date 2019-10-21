@@ -140,6 +140,31 @@ public class OrderAction extends BaseAction {
         return "buyDetail";
     }
 
+    public String buyAuditList() {
+        Employee applicant = new Employee();
+        applicant.setName(applicantName);
+        orderQueryModel.setApplicant(applicant);
+        setTotalRow(orderService.countBuyAudit(orderQueryModel));
+        List<Order> orderList = orderService.listBuyAudit(orderQueryModel, pageNum, pageSize);
+        put("orderList", orderList);
+        return "buyAuditList";
+    }
+
+    public String buyDetailAudit() {
+        order = orderService.get(order.getId());
+        return "buyDetailAudit";
+    }
+
+    public String buyAuditApprove() {
+        orderService.buyAuditApprove(order.getId(), getSessionEmployee());
+        return "buyAuditApprove";
+    }
+
+    public String buyAuditReject() {
+        orderService.buyAuditReject(order.getId(), getSessionEmployee());
+        return "buyAuditReject";
+    }
+
     // ============AJAX============
     public String ajaxListCategoryAndProduct() {
         // 过滤含有商品的类别列表信息

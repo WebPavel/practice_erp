@@ -109,6 +109,10 @@
             <result name="sellList">/WEB-INF/jsp/order/sell/list.jsp</result>
             <result name="buySave" type="redirectAction">order_buyList</result>
             <result name="buyDetail">/WEB-INF/jsp/order/buy/detail.jsp</result>
+            <result name="buyAuditList">/WEB-INF/jsp/order/buy/auditList.jsp</result>
+            <result name="buyDetailAudit">/WEB-INF/jsp/order/buy/detailAudit.jsp</result>
+            <result name="buyAuditApprove" type="redirectAction">order_buyAuditList</result>
+            <result name="buyAuditReject" type="redirectAction">order_buyAuditList</result>
             <result name="ajaxListCategoryAndProduct" type="json">
                 <param name="includeProperties">
                     categoryList\[\d+\]\.id,

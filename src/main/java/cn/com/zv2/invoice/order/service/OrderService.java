@@ -23,4 +23,22 @@ public interface OrderService extends BaseService<Order> {
 
     List<Order> listBuyOrder(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize);
 
+    int countBuyAudit(OrderQueryModel orderQueryModel);
+
+    List<Order> listBuyAudit(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize);
+
+    /**
+     * 采购审核通过
+     * @param orderId 采购订单ID
+     * @param auditor 审核人
+     */
+    void buyAuditApprove(Long orderId, Employee auditor);
+
+    /**
+     * 采购审核不通过
+     * @param orderId 采购订单ID
+     * @param auditor 审核人
+     */
+    void buyAuditReject(Long orderId, Employee auditor);
+
 }

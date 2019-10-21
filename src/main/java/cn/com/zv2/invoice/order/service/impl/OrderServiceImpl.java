@@ -8,6 +8,7 @@ import cn.com.zv2.invoice.order.service.OrderService;
 import cn.com.zv2.invoice.orderdetail.entity.OrderDetail;
 import cn.com.zv2.invoice.product.entity.Product;
 import cn.com.zv2.util.base.BaseQueryModel;
+import cn.com.zv2.util.exception.ApplicationException;
 import cn.com.zv2.util.number.SerialNumberUtils;
 
 import java.io.Serializable;
@@ -93,5 +94,46 @@ public class OrderServiceImpl implements OrderService {
         orderQueryModel.setType(Order.ORDER_TYPE_OF_BUY);
         return orderDao.list(orderQueryModel, pageNum, pageSize);
     }
+
+    @Override
+    public int countBuyAudit(OrderQueryModel orderQueryModel) {
+        return orderDao.countByTypes(orderQueryModel, buyAuditTypes);
+    }
+
+    @Override
+    public List<Order> listBuyAudit(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize) {
+        return orderDao.listByTypes(orderQueryModel, pageNum, pageSize, buyAuditTypes);
+    }
+
+    @Override
+    public void buyAuditApprove(Long orderId, Employee auditor) {
+        Order orderSnapshot = orderDao.get(orderId);
+        // 逻辑校验
+        if (!Order.ORDER_STATUS_OF_BUY_UNAUDITED.equals(orderSnapshot.getStatus())) {
+            throw new ApplicationException("对不起,请不要进行非法操作!");
+        }
+        // 快照更新
+        orderSnapshot.setStatus(Order.ORDER_STATUS_OF_BUY_APPROVE);
+        orderSnapshot.setGmtAudit(System.currentTimeMillis());
+        orderSnapshot.setAuditor(auditor);
+    }
+
+    @Override
+    public void buyAuditReject(Long orderId, Employee auditor) {
+        Order orderSnapshot = orderDao.get(orderId);
+        // 逻辑校验
+        if (!Order.ORDER_STATUS_OF_BUY_UNAUDITED.equals(orderSnapshot.getStatus())) {
+            throw new ApplicationException("对不起,请不要进行非法操作!");
+        }
+        // 快照更新
+        orderSnapshot.setStatus(Order.ORDER_STATUS_OF_BUY_REJECT);
+        orderSnapshot.setGmtAudit(System.currentTimeMillis());
+        orderSnapshot.setAuditor(auditor);
+    }
+
+    private Integer[] buyAuditTypes = new Integer[]{
+            Order.ORDER_TYPE_OF_BUY,
+            Order.ORDER_TYPE_OF_BUY_REFUND
+    };
 
 }

@@ -6,7 +6,10 @@ import cn.com.zv2.invoice.order.entity.OrderQueryModel;
 import cn.com.zv2.util.base.BaseDaoImpl;
 import cn.com.zv2.util.base.BaseQueryModel;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+
+import java.util.List;
 
 public class OrderDaoImpl extends BaseDaoImpl<Order> implements OrderDao {
 
@@ -45,6 +48,27 @@ public class OrderDaoImpl extends BaseDaoImpl<Order> implements OrderDao {
             detachedCriteria.createAlias("applicant", "applicant");
             detachedCriteria.add(Restrictions.like("applicant.name", "%" + orderQueryModel.getApplicant().getName().trim() + "%"));
         }
+    }
+
+    @Override
+    public int countByTypes(OrderQueryModel orderQueryModel, Integer[] types) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Order.class);
+        detachedCriteria.setProjection(Projections.rowCount());
+        enhanceDoQbc(detachedCriteria, orderQueryModel, types);
+        List<Long> count = this.getHibernateTemplate().findByCriteria(detachedCriteria);
+        return count.get(0).intValue();
+    }
+
+    @Override
+    public List<Order> listByTypes(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize, Integer[] types) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Order.class);
+        enhanceDoQbc(detachedCriteria, orderQueryModel, types);
+        return this.getHibernateTemplate().findByCriteria(detachedCriteria, (pageNum - 1) * pageSize, pageSize);
+    }
+
+    public void enhanceDoQbc(DetachedCriteria detachedCriteria, BaseQueryModel baseQueryModel, Integer[] types) {
+        doQbc(detachedCriteria, baseQueryModel);
+        detachedCriteria.add(Restrictions.in("type", types));
     }
 
 }
