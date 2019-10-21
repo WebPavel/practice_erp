@@ -51,7 +51,7 @@
                                 <td>&nbsp;</td>
                                 <td><a href="#"><img src="/image/order_tuo.gif" border="0"/></a></td>
                                 <td>&nbsp;</td>
-                                <td><a href="#"><img src="/image/order_tuo.gif" border="0"/></a></td>
+                                <td><a href="javascript:history.back()"><img src="/image/order_tuo.gif" border="0"/></a></td>
                             </tr>
                         </table>
                     </div>

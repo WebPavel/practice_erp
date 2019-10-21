@@ -1,0 +1,14 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.invoice.orderdetail.entity.OrderDetail" table="order_detail">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="price" />
+        <property name="quantity" />
+        <many-to-one name="product" class="cn.com.zv2.invoice.product.entity.Product" column="productId"/>
+        <many-to-one name="order" class="cn.com.zv2.invoice.order.entity.Order" column="orderId"/>
+    </class>
+</hibernate-mapping>

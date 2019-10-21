@@ -107,6 +107,8 @@
             <result name="buyList">/WEB-INF/jsp/order/buy/list.jsp</result>
             <result name="sellEdit">/WEB-INF/jsp/order/sell/edit.jsp</result>
             <result name="sellList">/WEB-INF/jsp/order/sell/list.jsp</result>
+            <result name="buySave" type="redirectAction">order_buyList</result>
+            <result name="buyDetail">/WEB-INF/jsp/order/buy/detail.jsp</result>
             <result name="ajaxListCategoryAndProduct" type="json">
                 <param name="includeProperties">
                     categoryList\[\d+\]\.id,
@@ -138,6 +140,10 @@
                     product\.bidView
                 </param>
             </result>
+        </action>
+
+        <!--OrderDetail-->
+        <action name="orderDetail_*" class="orderDetailAction" method="{1}">
         </action>
 
     </package>

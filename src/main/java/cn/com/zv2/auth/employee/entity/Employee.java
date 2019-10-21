@@ -146,7 +146,7 @@ public class Employee {
 
     public void setBirthdayView(String birthdayView) {
         this.birthdayView = birthdayView;
-        this.birthday = DateUtils.parse(this.birthdayView);
+        this.birthday = DateUtils.parse(birthdayView);
     }
 
     public String getLastLoginIP() {
@@ -163,7 +163,7 @@ public class Employee {
 
     public void setGmtLastLogin(Long gmtLastLogin) {
         this.gmtLastLogin = gmtLastLogin;
-        this.gmtLastLoginView = DateUtils.formatDateTime(this.gmtLastLogin);
+        this.gmtLastLoginView = DateUtils.formatDateTime(gmtLastLogin);
     }
 
     public String getGmtLastLoginView() {

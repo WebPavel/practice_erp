@@ -1,8 +1,6 @@
 package cn.com.zv2.core.generator;
 
-import cn.com.zv2.invoice.category.entity.Category;
-import cn.com.zv2.invoice.order.entity.Order;
-import cn.com.zv2.invoice.product.entity.Product;
+import cn.com.zv2.invoice.orderdetail.entity.OrderDetail;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -828,7 +826,7 @@ public class GeneratorUtils {
         bufferedWriter.newLine();
         bufferedWriter.write("                                <td>&nbsp;</td>");
         bufferedWriter.newLine();
-        bufferedWriter.write("                                <td><a href=\"#\"><img src=\"/image/order_tuo.gif\" border=\"0\"/></a></td>");
+        bufferedWriter.write("                                <td><a href=\"javascript:history.back()\"><img src=\"/image/order_tuo.gif\" border=\"0\"/></a></td>");
         bufferedWriter.newLine();
         bufferedWriter.write("                            </tr>");
         bufferedWriter.newLine();
@@ -854,7 +852,7 @@ public class GeneratorUtils {
 
     public static void main(String[] args) throws IOException {
         preGenerateDirectory();
-        new GeneratorUtils(Order.class);
+        new GeneratorUtils(OrderDetail.class);
         System.out.println("struts.xml不推荐自动生成");
         System.out.println("xxx.hbm.xml未添加关联关系");
         System.out.println("QueryModel未添加自定义范围查询条件");

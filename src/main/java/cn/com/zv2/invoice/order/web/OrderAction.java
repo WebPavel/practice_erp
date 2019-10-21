@@ -1,5 +1,6 @@
 package cn.com.zv2.invoice.order.web;
 
+import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.invoice.category.entity.Category;
 import cn.com.zv2.invoice.category.service.CategoryService;
 import cn.com.zv2.invoice.order.entity.Order;
@@ -11,6 +12,7 @@ import cn.com.zv2.invoice.supplier.entity.Supplier;
 import cn.com.zv2.invoice.supplier.service.SupplierService;
 import cn.com.zv2.util.base.BaseAction;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class OrderAction extends BaseAction {
@@ -19,6 +21,10 @@ public class OrderAction extends BaseAction {
     public Long categoryId;
     public Long productId;
     public String usedProductIds;
+    public Long[] productIds;
+    public Integer[] quantities;
+    public Double[] prices;
+    public String applicantName;
     private Product product;
     public Order order = new Order();
     public OrderQueryModel orderQueryModel = new OrderQueryModel();
@@ -87,6 +93,12 @@ public class OrderAction extends BaseAction {
     }
 
     public String buyList() {
+        Employee applicant = new Employee();
+        applicant.setName(applicantName);
+        orderQueryModel.setApplicant(applicant);
+        setTotalRow(orderService.count(orderQueryModel));
+        List<Order> orderList = orderService.listBuyOrder(orderQueryModel, pageNum, pageSize);
+        put("orderList", orderList);
         return "buyList";
     }
 
@@ -111,15 +123,34 @@ public class OrderAction extends BaseAction {
         return "sellEdit";
     }
 
+    public String buySave() {
+        System.out.println(supplierId);
+        System.out.println(Arrays.asList(productIds));
+        System.out.println(Arrays.asList(quantities));
+        System.out.println(Arrays.asList(prices));
+        Supplier supplier = new Supplier();
+        supplier.setId(supplierId);
+        order.setSupplier(supplier);
+        orderService.saveBuyOrder(order, productIds, quantities, prices, getSessionEmployee());
+        return "buySave";
+    }
+
+    public String buyDetail() {
+        order = orderService.get(order.getId());
+        return "buyDetail";
+    }
+
     // ============AJAX============
     public String ajaxListCategoryAndProduct() {
         // 过滤含有商品的类别列表信息
         categoryList = categoryService.listNonNullProductBySupplier(supplierId);
         productList = productService.listByCategory(categoryList.get(0).getId());
-        for (int i = productList.size() - 1; i >= 0; i--) {
-            Long productId = productList.get(i).getId();
-            if (usedProductIds.contains("'" + productId + "'")) {
-                productList.remove(i);
+        if (usedProductIds != null) {
+            for (int i = productList.size() - 1; i >= 0; i--) {
+                Long productId = productList.get(i).getId();
+                if (usedProductIds.contains("'" + productId + "'")) {
+                    productList.remove(i);
+                }
             }
         }
         product = productList.get(0);
@@ -161,6 +192,10 @@ public class OrderAction extends BaseAction {
         }
         product = productList.get(0);
         return "ajaxListNewCategoryAndProduct";
+    }
+
+    private Employee getSessionEmployee() {
+        return (Employee) getSession(Employee.EMPLOYEE_LOGIN_USER_OBJECT_NAME);
     }
 
 }

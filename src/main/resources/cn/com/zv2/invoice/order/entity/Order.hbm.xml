@@ -6,5 +6,21 @@
         <id name="id">
             <generator class="native" />
         </id>
+        <property name="sn" />
+        <property name="gmtCreate" />
+        <property name="gmtAudit" />
+        <property name="gmtWarehousing" />
+        <property name="type" />
+        <property name="status" />
+        <property name="amount" />
+        <property name="total" />
+        <many-to-one name="applicant" class="cn.com.zv2.auth.employee.entity.Employee" column="applicant"/>
+        <many-to-one name="auditor" class="cn.com.zv2.auth.employee.entity.Employee" column="auditor"/>
+        <many-to-one name="merchandiser" class="cn.com.zv2.auth.employee.entity.Employee" column="merchandiser"/>
+        <many-to-one name="supplier" class="cn.com.zv2.invoice.supplier.entity.Supplier" column="supplierId"/>
+        <set name="orderDetails" cascade="save-update" inverse="true" order-by="id desc,quantity asc">
+            <key column="orderId"></key>
+            <one-to-many class="cn.com.zv2.invoice.orderdetail.entity.OrderDetail"/>
+        </set>
     </class>
 </hibernate-mapping>
