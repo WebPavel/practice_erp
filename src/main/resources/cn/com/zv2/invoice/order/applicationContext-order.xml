@@ -9,6 +9,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="supplierService" ref="supplierService"/>
         <property name="categoryService" ref="categoryService"/>
         <property name="productService" ref="productService"/>
+        <property name="employeeService" ref="employeeService"/>
     </bean>
     <!--Service-->
     <bean id="orderService" class="cn.com.zv2.invoice.order.service.impl.OrderServiceImpl">

@@ -21,9 +21,11 @@ public interface OrderService extends BaseService<Order> {
      */
     void saveBuyOrder(Order order, Long[] productIds, Integer[] quantities, Double[] prices, Employee applicant);
 
+    Integer countBuyOrder(OrderQueryModel orderQueryModel);
+
     List<Order> listBuyOrder(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize);
 
-    int countBuyAudit(OrderQueryModel orderQueryModel);
+    Integer countBuyAudit(OrderQueryModel orderQueryModel);
 
     List<Order> listBuyAudit(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize);
 
@@ -40,5 +42,17 @@ public interface OrderService extends BaseService<Order> {
      * @param auditor 审核人
      */
     void buyAuditReject(Long orderId, Employee auditor);
+
+    Integer countTask(OrderQueryModel orderQueryModel);
+
+    List<Order> listTask(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize);
+
+    void assignTask(Long orderId, Employee merchandiser);
+
+    Integer countMyTask(OrderQueryModel orderQueryModel, Employee employee);
+
+    List<Order> listMyTask(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize, Employee employee);
+
+    void endTask(Long orderId);
 
 }

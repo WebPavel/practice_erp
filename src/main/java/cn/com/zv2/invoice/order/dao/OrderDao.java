@@ -8,8 +8,12 @@ import java.util.List;
 
 public interface OrderDao extends BaseDao<Order> {
 
-    int countByTypes(OrderQueryModel orderQueryModel, Integer[] types);
+    Integer countByTypes(OrderQueryModel orderQueryModel, Integer[] types);
 
     List<Order> listByTypes(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize, Integer[] types);
+
+    Integer countByStatuses(OrderQueryModel orderQueryModel, Integer[] statuses);
+
+    List<Order> listByStatuses(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize, Integer[] statuses);
 
 }

@@ -4,6 +4,8 @@ import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.util.base.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 public interface EmployeeService extends BaseService<Employee> {
 
@@ -28,4 +30,12 @@ public interface EmployeeService extends BaseService<Employee> {
     void save(Employee employee, Long departmentId, Long[] roleIds);
 
     void update(Employee employee, Long departmentId, Long[] roleIds);
+
+    /**
+     * 获取指定部门所有员工信息
+     * @param departmentId 部门ID
+     * @return
+     */
+    List<Employee> listByDepartment(Long departmentId);
+
 }

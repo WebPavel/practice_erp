@@ -73,8 +73,8 @@ public class OrderServiceImpl implements OrderService {
         Set<OrderDetail> orderDetails = new HashSet<>();
         for (int i = 0; i < productIds.length; i++) {
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setQuantity(quantities[i]);
             orderDetail.setPrice(prices[i]);
+            orderDetail.setQuantity(quantities[i]);
             Product product = new Product();
             product.setId(productIds[i]);
             orderDetail.setProduct(product);
@@ -90,13 +90,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Integer countBuyOrder(OrderQueryModel orderQueryModel) {
+        orderQueryModel.setType(Order.ORDER_TYPE_OF_BUY);
+        return orderDao.count(orderQueryModel);
+    }
+
+    @Override
     public List<Order> listBuyOrder(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize) {
         orderQueryModel.setType(Order.ORDER_TYPE_OF_BUY);
         return orderDao.list(orderQueryModel, pageNum, pageSize);
     }
 
     @Override
-    public int countBuyAudit(OrderQueryModel orderQueryModel) {
+    public Integer countBuyAudit(OrderQueryModel orderQueryModel) {
         return orderDao.countByTypes(orderQueryModel, buyAuditTypes);
     }
 
@@ -131,9 +137,59 @@ public class OrderServiceImpl implements OrderService {
         orderSnapshot.setAuditor(auditor);
     }
 
+    @Override
+    public Integer countTask(OrderQueryModel orderQueryModel) {
+        return orderDao.countByStatuses(orderQueryModel, taskStatuses);
+    }
+
+    @Override
+    public List<Order> listTask(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize) {
+        return orderDao.listByStatuses(orderQueryModel, pageNum, pageSize, taskStatuses);
+    }
+
+    @Override
+    public void assignTask(Long orderId, Employee merchandiser) {
+        Order orderSnapshot = orderDao.get(orderId);
+        // 逻辑校验
+        if (!Order.ORDER_STATUS_OF_BUY_APPROVE.equals(orderSnapshot.getStatus())) {
+            throw new ApplicationException("对不起,请不要进行非法操作!");
+        }
+        orderSnapshot.setMerchandiser(merchandiser);
+        orderSnapshot.setStatus(Order.ORDER_STATUS_OF_BUY_PROCUREMENT);
+    }
+
+    @Override
+    public Integer countMyTask(OrderQueryModel orderQueryModel, Employee employee) {
+        orderQueryModel.setMerchandiser(employee);
+        return orderDao.count(orderQueryModel);
+    }
+
+    @Override
+    public List<Order> listMyTask(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize, Employee employee) {
+        orderQueryModel.setMerchandiser(employee);
+        return orderDao.list(orderQueryModel, pageNum, pageSize);
+    }
+
+    @Override
+    public void endTask(Long orderId) {
+        Order orderSnapshot = orderDao.get(orderId);
+        // 逻辑校验
+        if (!Order.ORDER_STATUS_OF_BUY_PROCUREMENT.equals(orderSnapshot.getStatus())) {
+            throw new ApplicationException("对不起,请不要进行非法操作!");
+        }
+        orderSnapshot.setStatus(Order.ORDER_STATUS_OF_BUY_WAREHOUSING);
+    }
+
     private Integer[] buyAuditTypes = new Integer[]{
             Order.ORDER_TYPE_OF_BUY,
             Order.ORDER_TYPE_OF_BUY_REFUND
+    };
+
+    private Integer[] taskStatuses = new Integer[]{
+            Order.ORDER_STATUS_OF_BUY_APPROVE,
+            Order.ORDER_STATUS_OF_BUY_PROCUREMENT,
+            Order.ORDER_STATUS_OF_BUY_WAREHOUSING,
+            Order.ORDER_STATUS_OF_BUY_STATEMENT
     };
 
 }

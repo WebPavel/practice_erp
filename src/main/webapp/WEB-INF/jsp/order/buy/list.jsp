@@ -10,12 +10,6 @@
             $("form:first").submit();
         });
     });
-    function confirm(tip, id) {
-        top.lock.show();
-        top.$('context').style.display = 'block';
-        top.$('context-text').innerHTML = tip;
-        top.$('hide-action').value = 'order_delete.action?order.id=' + id;
-    }
 </script>
 <div class="content-right">
     <div class="content-right-pic_w">

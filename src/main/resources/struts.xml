@@ -105,12 +105,10 @@
         <action name="order_*" class="orderAction" method="{1}">
             <result name="buyEdit">/WEB-INF/jsp/order/buy/edit.jsp</result>
             <result name="buyList">/WEB-INF/jsp/order/buy/list.jsp</result>
-            <result name="sellEdit">/WEB-INF/jsp/order/sell/edit.jsp</result>
-            <result name="sellList">/WEB-INF/jsp/order/sell/list.jsp</result>
             <result name="buySave" type="redirectAction">order_buyList</result>
             <result name="buyDetail">/WEB-INF/jsp/order/buy/detail.jsp</result>
             <result name="buyAuditList">/WEB-INF/jsp/order/buy/auditList.jsp</result>
-            <result name="buyDetailAudit">/WEB-INF/jsp/order/buy/detailAudit.jsp</result>
+            <result name="buyAuditDetail">/WEB-INF/jsp/order/buy/auditDetail.jsp</result>
             <result name="buyAuditApprove" type="redirectAction">order_buyAuditList</result>
             <result name="buyAuditReject" type="redirectAction">order_buyAuditList</result>
             <result name="ajaxListCategoryAndProduct" type="json">
@@ -148,6 +146,16 @@
 
         <!--OrderDetail-->
         <action name="orderDetail_*" class="orderDetailAction" method="{1}">
+        </action>
+
+        <!--Transport-->
+        <action name="transport_*" class="orderAction" method="{1}">
+            <result name="taskList">/WEB-INF/jsp/transport/taskList.jsp</result>
+            <result name="taskDetail">/WEB-INF/jsp/transport/taskDetail.jsp</result>
+            <result name="assignTask" type="redirectAction">transport_taskList</result>
+            <result name="myTaskList">/WEB-INF/jsp/transport/myTaskList.jsp</result>
+            <result name="myTaskDetail">/WEB-INF/jsp/transport/myTaskDetail.jsp</result>
+            <result name="endTask" type="redirectAction">transport_myTaskList</result>
         </action>
 
     </package>

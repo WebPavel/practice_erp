@@ -1,6 +1,7 @@
 package cn.com.zv2.invoice.order.web;
 
 import cn.com.zv2.auth.employee.entity.Employee;
+import cn.com.zv2.auth.employee.service.EmployeeService;
 import cn.com.zv2.invoice.category.entity.Category;
 import cn.com.zv2.invoice.category.service.CategoryService;
 import cn.com.zv2.invoice.order.entity.Order;
@@ -17,7 +18,9 @@ import java.util.List;
 
 public class OrderAction extends BaseAction {
 
+    public Long merchandiserId;
     public Long supplierId;
+    public Integer supplierDelivered;
     public Long categoryId;
     public Long productId;
     public String usedProductIds;
@@ -25,6 +28,8 @@ public class OrderAction extends BaseAction {
     public Integer[] quantities;
     public Double[] prices;
     public String applicantName;
+    public String auditorName;
+    public String merchandiserName;
     private Product product;
     public Order order = new Order();
     public OrderQueryModel orderQueryModel = new OrderQueryModel();
@@ -35,6 +40,7 @@ public class OrderAction extends BaseAction {
     private SupplierService supplierService;
     private CategoryService categoryService;
     private ProductService productService;
+    private EmployeeService employeeService;
 
     public Product getProduct() {
         return product;
@@ -62,6 +68,10 @@ public class OrderAction extends BaseAction {
 
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     public String list() {
@@ -96,7 +106,7 @@ public class OrderAction extends BaseAction {
         Employee applicant = new Employee();
         applicant.setName(applicantName);
         orderQueryModel.setApplicant(applicant);
-        setTotalRow(orderService.count(orderQueryModel));
+        setTotalRow(orderService.countBuyOrder(orderQueryModel));
         List<Order> orderList = orderService.listBuyOrder(orderQueryModel, pageNum, pageSize);
         put("orderList", orderList);
         return "buyList";
@@ -113,14 +123,6 @@ public class OrderAction extends BaseAction {
         put("categoryList", categoryList);
         put("productList", productList);
         return "buyEdit";
-    }
-
-    public String sellList() {
-        return "sellList";
-    }
-
-    public String sellEdit() {
-        return "sellEdit";
     }
 
     public String buySave() {
@@ -150,9 +152,9 @@ public class OrderAction extends BaseAction {
         return "buyAuditList";
     }
 
-    public String buyDetailAudit() {
+    public String buyAuditDetail() {
         order = orderService.get(order.getId());
-        return "buyDetailAudit";
+        return "buyAuditDetail";
     }
 
     public String buyAuditApprove() {
@@ -163,6 +165,67 @@ public class OrderAction extends BaseAction {
     public String buyAuditReject() {
         orderService.buyAuditReject(order.getId(), getSessionEmployee());
         return "buyAuditReject";
+    }
+
+
+
+    public String taskList() {
+        List<Supplier> supplierList = supplierService.list();
+        put("supplierList", supplierList);
+        Employee applicant = new Employee();
+        applicant.setName(applicantName);
+        orderQueryModel.setApplicant(applicant);
+        Employee auditor = new Employee();
+        auditor.setName(auditorName);
+        orderQueryModel.setAuditor(auditor);
+        Employee merchandiser = new Employee();
+        merchandiser.setName(merchandiserName);
+        orderQueryModel.setMerchandiser(merchandiser);
+        Supplier supplier = new Supplier();
+        supplier.setId(supplierId);
+        supplier.setDelivered(supplierDelivered);
+        orderQueryModel.setSupplier(supplier);
+        setTotalRow(orderService.countTask(orderQueryModel));
+        List<Order> orderList = orderService.listTask(orderQueryModel, pageNum, pageSize);
+        put("orderList", orderList);
+        return "taskList";
+    }
+
+    public String taskDetail() {
+        List<Employee> employeeList = employeeService.listByDepartment(getSessionEmployee().getDepartment().getId());
+        put("employeeList", employeeList);
+        order = orderService.get(order.getId());
+        return "taskDetail";
+    }
+
+    public String assignTask() {
+        Employee merchandiser = new Employee();
+        merchandiser.setId(merchandiserId);
+        orderService.assignTask(order.getId(), merchandiser);
+        return "assignTask";
+    }
+
+    public String myTaskList() {
+        List<Supplier> supplierList = supplierService.list();
+        put("supplierList", supplierList);
+        Supplier supplier = new Supplier();
+        supplier.setId(supplierId);
+        supplier.setDelivered(supplierDelivered);
+        orderQueryModel.setSupplier(supplier);
+        setTotalRow(orderService.countMyTask(orderQueryModel, getSessionEmployee()));
+        List<Order> orderList = orderService.listMyTask(orderQueryModel, pageNum, pageSize, getSessionEmployee());
+        put("orderList", orderList);
+        return "myTaskList";
+    }
+
+    public String myTaskDetail() {
+        order = orderService.get(order.getId());
+        return "myTaskDetail";
+    }
+
+    public String endTask() {
+        orderService.endTask(order.getId());
+        return "endTask";
     }
 
     // ============AJAX============

@@ -61,4 +61,10 @@ public class EmployeeDaoImpl extends BaseDaoImpl<Employee> implements EmployeeDa
         return updateRow > 0;
     }
 
+    @Override
+    public List<Employee> listByDepartmentId(Long departmentId) {
+        String hql = "from Employee where department.id = ?";
+        return this.getHibernateTemplate().find(hql, departmentId);
+    }
+
 }

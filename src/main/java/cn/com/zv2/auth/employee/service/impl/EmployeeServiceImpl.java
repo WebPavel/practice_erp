@@ -140,4 +140,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeSnapshot.setRoles(roles);
     }
 
+    @Override
+    public List<Employee> listByDepartment(Long departmentId) {
+        return employeeDao.listByDepartmentId(departmentId);
+    }
+
 }

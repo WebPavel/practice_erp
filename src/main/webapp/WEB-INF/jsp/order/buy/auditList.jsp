@@ -89,7 +89,7 @@
 								<td align="right"><s:property value="totalView"/> 元</td>
 								<td>
 									<s:if test="status == @cn.com.zv2.invoice.order.entity.Order@ORDER_STATUS_OF_BUY_UNAUDITED">
-										<s:a action="order_buyDetailAudit" cssClass="edit">
+										<s:a action="order_buyAuditDetail" cssClass="edit">
 											<s:param name="order.id" value="id"/>
 											<font color="red">审核</font>
 										</s:a>

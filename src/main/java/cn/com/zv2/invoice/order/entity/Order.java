@@ -240,6 +240,11 @@ public class Order {
         return gmtCreateView;
     }
 
+    public void setGmtAuditView(String gmtAuditView) {
+        this.gmtAuditView = gmtAuditView;
+        this.gmtAudit = DateUtils.parse(gmtAuditView);
+    }
+
     public String getGmtAuditView() {
         return gmtAuditView;
     }
