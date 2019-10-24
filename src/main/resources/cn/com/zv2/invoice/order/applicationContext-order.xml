@@ -10,10 +10,14 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="categoryService" ref="categoryService"/>
         <property name="productService" ref="productService"/>
         <property name="employeeService" ref="employeeService"/>
+        <property name="warehouseService" ref="warehouseService"/>
     </bean>
     <!--Service-->
     <bean id="orderService" class="cn.com.zv2.invoice.order.service.impl.OrderServiceImpl">
         <property name="orderDao" ref="orderDao"/>
+        <property name="orderDetailDao" ref="orderDetailDao"/>
+        <property name="storageDetailDao" ref="storageDetailDao"/>
+        <property name="operationDetailDao" ref="operationDetailDao"/>
     </bean>
     <!--Dao-->
     <bean id="orderDao" class="cn.com.zv2.invoice.order.dao.impl.OrderDaoImpl">

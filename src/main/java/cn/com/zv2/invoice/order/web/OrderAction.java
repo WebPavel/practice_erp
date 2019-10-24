@@ -7,10 +7,13 @@ import cn.com.zv2.invoice.category.service.CategoryService;
 import cn.com.zv2.invoice.order.entity.Order;
 import cn.com.zv2.invoice.order.entity.OrderQueryModel;
 import cn.com.zv2.invoice.order.service.OrderService;
+import cn.com.zv2.invoice.orderdetail.entity.OrderDetail;
 import cn.com.zv2.invoice.product.entity.Product;
 import cn.com.zv2.invoice.product.service.ProductService;
 import cn.com.zv2.invoice.supplier.entity.Supplier;
 import cn.com.zv2.invoice.supplier.service.SupplierService;
+import cn.com.zv2.invoice.warehouse.entity.Warehouse;
+import cn.com.zv2.invoice.warehouse.service.WarehouseService;
 import cn.com.zv2.util.base.BaseAction;
 
 import java.util.Arrays;
@@ -18,7 +21,6 @@ import java.util.List;
 
 public class OrderAction extends BaseAction {
 
-    public Long merchandiserId;
     public Long supplierId;
     public Integer supplierDelivered;
     public Long categoryId;
@@ -29,8 +31,13 @@ public class OrderAction extends BaseAction {
     public Double[] prices;
     public String applicantName;
     public String auditorName;
+    public Long merchandiserId;
     public String merchandiserName;
+    public Long warehouseId;
+    public Integer inQuantity;
+    public Long orderDetailId;
     private Product product;
+    private OrderDetail orderDetail;
     public Order order = new Order();
     public OrderQueryModel orderQueryModel = new OrderQueryModel();
     private List<Category> categoryList;
@@ -41,9 +48,14 @@ public class OrderAction extends BaseAction {
     private CategoryService categoryService;
     private ProductService productService;
     private EmployeeService employeeService;
+    private WarehouseService warehouseService;
 
     public Product getProduct() {
         return product;
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
     }
 
     public List<Category> getCategoryList() {
@@ -72,6 +84,10 @@ public class OrderAction extends BaseAction {
 
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
+    }
+
+    public void setWarehouseService(WarehouseService warehouseService) {
+        this.warehouseService = warehouseService;
     }
 
     public String list() {
@@ -228,6 +244,22 @@ public class OrderAction extends BaseAction {
         return "endTask";
     }
 
+
+    // ========入库========
+    public String warehousingList() {
+        setTotalRow(orderService.countWarehousing(orderQueryModel));
+        List<Order> orderList = orderService.listWarehousing(orderQueryModel, pageNum, pageSize);
+        put("orderList", orderList);
+        return "warehousingList";
+    }
+
+    public String warehousingDetail() {
+        List<Warehouse> warehouseList = warehouseService.list();
+        put("warehouseList", warehouseList);
+        order = orderService.get(order.getId());
+        return "warehousingDetail";
+    }
+
     // ============AJAX============
     public String ajaxListCategoryAndProduct() {
         // 过滤含有商品的类别列表信息
@@ -280,6 +312,11 @@ public class OrderAction extends BaseAction {
         }
         product = productList.get(0);
         return "ajaxListNewCategoryAndProduct";
+    }
+
+    public String ajaxInProduct() {
+        orderDetail = orderService.inProduct(warehouseId, orderDetailId, inQuantity, getSessionEmployee());
+        return "ajaxInProduct";
     }
 
     private Employee getSessionEmployee() {

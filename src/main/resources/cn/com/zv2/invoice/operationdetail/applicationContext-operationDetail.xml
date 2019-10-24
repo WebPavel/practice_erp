@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="operationDetailAction" class="cn.com.zv2.invoice.operationdetail.web.OperationDetailAction" scope="prototype">
+        <property name="operationDetailService" ref="operationDetailService"/>
+    </bean>
+    <!--Service-->
+    <bean id="operationDetailService" class="cn.com.zv2.invoice.operationdetail.service.impl.OperationDetailServiceImpl">
+        <property name="operationDetailDao" ref="operationDetailDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="operationDetailDao" class="cn.com.zv2.invoice.operationdetail.dao.impl.OperationDetailDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

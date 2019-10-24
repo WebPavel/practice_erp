@@ -1,12 +1,18 @@
 package cn.com.zv2.invoice.order.service.impl;
 
 import cn.com.zv2.auth.employee.entity.Employee;
+import cn.com.zv2.invoice.operationdetail.dao.OperationDetailDao;
+import cn.com.zv2.invoice.operationdetail.entity.OperationDetail;
 import cn.com.zv2.invoice.order.dao.OrderDao;
 import cn.com.zv2.invoice.order.entity.Order;
 import cn.com.zv2.invoice.order.entity.OrderQueryModel;
 import cn.com.zv2.invoice.order.service.OrderService;
+import cn.com.zv2.invoice.orderdetail.dao.OrderDetailDao;
 import cn.com.zv2.invoice.orderdetail.entity.OrderDetail;
 import cn.com.zv2.invoice.product.entity.Product;
+import cn.com.zv2.invoice.storagedetail.dao.StorageDetailDao;
+import cn.com.zv2.invoice.storagedetail.entity.StorageDetail;
+import cn.com.zv2.invoice.warehouse.entity.Warehouse;
 import cn.com.zv2.util.base.BaseQueryModel;
 import cn.com.zv2.util.exception.ApplicationException;
 import cn.com.zv2.util.number.SerialNumberUtils;
@@ -19,9 +25,24 @@ import java.util.Set;
 public class OrderServiceImpl implements OrderService {
 
     private OrderDao orderDao;
+    private OrderDetailDao orderDetailDao;
+    private StorageDetailDao storageDetailDao;
+    private OperationDetailDao operationDetailDao;
 
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
+    }
+
+    public void setOrderDetailDao(OrderDetailDao orderDetailDao) {
+        this.orderDetailDao = orderDetailDao;
+    }
+
+    public void setStorageDetailDao(StorageDetailDao storageDetailDao) {
+        this.storageDetailDao = storageDetailDao;
+    }
+
+    public void setOperationDetailDao(OperationDetailDao operationDetailDao) {
+        this.operationDetailDao = operationDetailDao;
     }
 
     @Override
@@ -75,6 +96,7 @@ public class OrderServiceImpl implements OrderService {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setPrice(prices[i]);
             orderDetail.setQuantity(quantities[i]);
+            orderDetail.setSurplus(quantities[i]);
             Product product = new Product();
             product.setId(productIds[i]);
             orderDetail.setProduct(product);
@@ -180,6 +202,62 @@ public class OrderServiceImpl implements OrderService {
         orderSnapshot.setStatus(Order.ORDER_STATUS_OF_BUY_WAREHOUSING);
     }
 
+    @Override
+    public Integer countWarehousing(OrderQueryModel orderQueryModel) {
+        return orderDao.countByStatuses(orderQueryModel, warehousingStatuses);
+    }
+
+    @Override
+    public List<Order> listWarehousing(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize) {
+        return orderDao.listByStatuses(orderQueryModel, pageNum, pageSize, warehousingStatuses);
+    }
+
+    @Override
+    public OrderDetail inProduct(Long warehouseId, Long orderDetailId, Integer inQuantity, Employee keeper) {
+        // 入库流程:1.更新订单明细剩余数量,2.更新库存商品数量,3.记录操作日志
+        OrderDetail orderDetailSnapshot = orderDetailDao.get(orderDetailId);
+        Order order = orderDetailSnapshot.getOrder();
+        // 逻辑校验
+        if (!Order.ORDER_STATUS_OF_BUY_WAREHOUSING.equals(order.getStatus())) {
+            throw new ApplicationException("对不起,请不要进行非法操作!");
+        }
+        if (orderDetailSnapshot.getQuantity() < inQuantity) {
+            throw new ApplicationException("illegal parameter");
+        }
+        orderDetailSnapshot.setSurplus(orderDetailSnapshot.getSurplus() - inQuantity);
+        Product product = orderDetailSnapshot.getProduct();
+        Warehouse warehouse = new Warehouse();
+        warehouse.setId(warehouseId);
+        StorageDetail storageDetail = storageDetailDao.getByWarehouseAndProduct(warehouseId, product.getId());
+        if (storageDetail != null) {
+            storageDetail.setQuantity(storageDetail.getQuantity() + inQuantity);
+        } else {
+            storageDetail = new StorageDetail();
+            storageDetail.setWarehouse(warehouse);
+            storageDetail.setProduct(product);
+            storageDetail.setQuantity(inQuantity);
+            storageDetailDao.save(storageDetail);
+        }
+        OperationDetail operationDetail = new OperationDetail();
+        operationDetail.setGmtOperate(System.currentTimeMillis());
+        operationDetail.setQuantity(inQuantity);
+        operationDetail.setType(OperationDetail.OPERATIONDETAIL_TYPE_OF_IN);
+        operationDetail.setOperator(keeper);
+        operationDetail.setWarehouse(warehouse);
+        operationDetail.setProduct(product);
+        operationDetailDao.save(operationDetail);
+        // 判断所有订单明细全部入库，修改订单状态
+        Integer countSurplus = 0;
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            countSurplus += orderDetail.getSurplus();
+        }
+        if (countSurplus == 0) {
+            order.setStatus(Order.ORDER_STATUS_OF_BUY_STATEMENT);
+            order.setGmtWarehousing(System.currentTimeMillis());
+        }
+        return orderDetailSnapshot;
+    }
+
     private Integer[] buyAuditTypes = new Integer[]{
             Order.ORDER_TYPE_OF_BUY,
             Order.ORDER_TYPE_OF_BUY_REFUND
@@ -192,4 +270,7 @@ public class OrderServiceImpl implements OrderService {
             Order.ORDER_STATUS_OF_BUY_STATEMENT
     };
 
+    private Integer[] warehousingStatuses = new Integer[]{
+            Order.ORDER_STATUS_OF_BUY_WAREHOUSING
+    };
 }

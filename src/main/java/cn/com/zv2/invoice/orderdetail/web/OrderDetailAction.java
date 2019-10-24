@@ -13,6 +13,10 @@ public class OrderDetailAction extends BaseAction {
     public OrderDetailQueryModel orderDetailQueryModel = new OrderDetailQueryModel();
     private OrderDetailService orderDetailService;
 
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
+    }
+
     public void setOrderDetailService(OrderDetailService orderDetailService) {
         this.orderDetailService = orderDetailService;
     }
@@ -45,4 +49,9 @@ public class OrderDetailAction extends BaseAction {
         return REDIRECT_LIST;
     }
 
+    // ============AJAX============
+    public String ajaxGetSurplus() {
+        orderDetail = orderDetailService.get(orderDetail.getId());
+        return "ajaxGetSurplus";
+    }
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.com.zv2.invoice.warehouse.entity.Warehouse" table="warehouse">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="name" />
+        <property name="address" />
+        <many-to-one name="keeper" class="cn.com.zv2.auth.employee.entity.Employee" column="keeper"/>
+    </class>
+</hibernate-mapping>

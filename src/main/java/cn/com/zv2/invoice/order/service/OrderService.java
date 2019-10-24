@@ -3,6 +3,7 @@ package cn.com.zv2.invoice.order.service;
 import cn.com.zv2.auth.employee.entity.Employee;
 import cn.com.zv2.invoice.order.entity.Order;
 import cn.com.zv2.invoice.order.entity.OrderQueryModel;
+import cn.com.zv2.invoice.orderdetail.entity.OrderDetail;
 import cn.com.zv2.util.base.BaseService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,4 +56,16 @@ public interface OrderService extends BaseService<Order> {
 
     void endTask(Long orderId);
 
+    Integer countWarehousing(OrderQueryModel orderQueryModel);
+
+    List<Order> listWarehousing(OrderQueryModel orderQueryModel, Integer pageNum, Integer pageSize);
+
+    /**
+     * 入库
+     * @param warehouseId
+     * @param orderDetailId
+     * @param inQuantity
+     * @param keeper
+     */
+    OrderDetail inProduct(Long warehouseId, Long orderDetailId, Integer inQuantity, Employee keeper);
 }

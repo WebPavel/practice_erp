@@ -111,6 +111,8 @@
             <result name="buyAuditDetail">/WEB-INF/jsp/order/buy/auditDetail.jsp</result>
             <result name="buyAuditApprove" type="redirectAction">order_buyAuditList</result>
             <result name="buyAuditReject" type="redirectAction">order_buyAuditList</result>
+            <result name="warehousingList">/WEB-INF/jsp/warehouse/in/warehousingList.jsp</result>
+            <result name="warehousingDetail">/WEB-INF/jsp/warehouse/in/warehousingDetail.jsp</result>
             <result name="ajaxListCategoryAndProduct" type="json">
                 <param name="includeProperties">
                     categoryList\[\d+\]\.id,
@@ -142,10 +144,22 @@
                     product\.bidView
                 </param>
             </result>
+            <result name="ajaxInProduct" type="json">
+                <param name="root">orderDetail</param>
+                <param name="includeProperties">
+                    quantity,surplus
+                </param>
+            </result>
         </action>
 
         <!--OrderDetail-->
         <action name="orderDetail_*" class="orderDetailAction" method="{1}">
+            <result name="ajaxGetSurplus" type="json">
+                <param name="root">orderDetail</param>
+                <param name="includeProperties">
+                    surplus
+                </param>
+            </result>
         </action>
 
         <!--Transport-->
@@ -156,6 +170,18 @@
             <result name="myTaskList">/WEB-INF/jsp/transport/myTaskList.jsp</result>
             <result name="myTaskDetail">/WEB-INF/jsp/transport/myTaskDetail.jsp</result>
             <result name="endTask" type="redirectAction">transport_myTaskList</result>
+        </action>
+
+        <!--Warehouse-->
+        <action name="warehouse_*" class="warehouseAction" method="{1}">
+        </action>
+
+        <!--StorageDetail-->
+        <action name="storageDetail_*" class="storageDetailAction" method="{1}">
+        </action>
+
+        <!--OperationDetail-->
+        <action name="operationDetail_*" class="operationDetailAction" method="{1}">
         </action>
 
     </package>

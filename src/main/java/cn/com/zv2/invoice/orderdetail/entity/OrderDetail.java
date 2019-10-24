@@ -13,6 +13,7 @@ public class OrderDetail {
     private Long id;
     private Integer quantity;
     private Double price;
+    private Integer surplus;
     private Product product;
     private Order order;
 
@@ -43,6 +44,14 @@ public class OrderDetail {
     public void setPrice(Double price) {
         this.price = price;
         this.priceView = FormatUtils.formatCurrency(price);
+    }
+
+    public Integer getSurplus() {
+        return surplus;
+    }
+
+    public void setSurplus(Integer surplus) {
+        this.surplus = surplus;
     }
 
     public Product getProduct() {

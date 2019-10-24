@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Action-->
+    <bean id="warehouseAction" class="cn.com.zv2.invoice.warehouse.web.WarehouseAction" scope="prototype">
+        <property name="warehouseService" ref="warehouseService"/>
+        <property name="employeeService" ref="employeeService"/>
+    </bean>
+    <!--Service-->
+    <bean id="warehouseService" class="cn.com.zv2.invoice.warehouse.service.impl.WarehouseServiceImpl">
+        <property name="warehouseDao" ref="warehouseDao"/>
+    </bean>
+    <!--Dao-->
+    <bean id="warehouseDao" class="cn.com.zv2.invoice.warehouse.dao.impl.WarehouseDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

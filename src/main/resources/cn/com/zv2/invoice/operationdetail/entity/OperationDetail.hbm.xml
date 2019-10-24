@@ -2,14 +2,15 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cn.com.zv2.invoice.orderdetail.entity.OrderDetail" table="order_detail">
+    <class name="cn.com.zv2.invoice.operationdetail.entity.OperationDetail" table="operationDetail">
         <id name="id">
             <generator class="native" />
         </id>
-        <property name="price" />
+        <property name="gmtOperate" />
         <property name="quantity" />
-        <property name="surplus" />
+        <property name="type" />
+        <many-to-one name="operator" class="cn.com.zv2.auth.employee.entity.Employee" column="operator"/>
+        <many-to-one name="warehouse" class="cn.com.zv2.invoice.warehouse.entity.Warehouse" column="warehouseId"/>
         <many-to-one name="product" class="cn.com.zv2.invoice.product.entity.Product" column="productId"/>
-        <many-to-one name="order" class="cn.com.zv2.invoice.order.entity.Order" column="orderId"/>
     </class>
 </hibernate-mapping>
