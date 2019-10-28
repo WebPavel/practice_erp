@@ -184,5 +184,25 @@
         <action name="operationDetail_*" class="operationDetailAction" method="{1}">
         </action>
 
+        <!--Bill-->
+        <action name="bill_*" class="billAction" method="{1}">
+            <result name="buyBillList">/WEB-INF/jsp/bill/buyBillList.jsp</result>
+            <result name="downloadBuyBill" type="stream">
+                <param name="contentType">application/vnd.ms-excel;charset=iso-8859-1</param>
+                <param name="inputName">downloadExcelStream</param>
+                <param name="contentDisposition">attachment;filename="${xlsName}"</param>
+            </result>
+            <result name="ajaxListOrderDetailByProduct" type="json">
+                <param name="root">action</param>
+                <param name="includeProperties">
+                    orderDetailList\[\d+\]\.order\.sn,
+                    orderDetailList\[\d+\]\.order\.gmtCreateView,
+                    orderDetailList\[\d+\]\.quantity,
+                    orderDetailList\[\d+\]\.priceView,
+                    orderDetailList\[\d+\]\.subtotalView
+                </param>
+            </result>
+        </action>
+
     </package>
 </struts>
