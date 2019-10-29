@@ -9,14 +9,14 @@ import java.util.List;
  */
 public interface BaseDao<T> {
     Serializable save(T model);
-    void update(T model);
-    void delete(T model);
+    boolean update(T model);
+    boolean delete(T model);
     T get(Serializable id);
     List<T> list(int pageNum, int pageSize);
     List<T> list(T queryModel, int pageNum, int pageSize);
     Long count();
     Long count(T queryModel);
     List<Object[]> executeSql(String sql, Object[] params);
-    void batchUpdate(String sqlTemplate, List<Object[]> list);
-    void batchUpdate(String sqlTemplate, Object fieldValue, Serializable[] ids);
+    boolean batchUpdate(String sqlTemplate, List<Object[]> list);
+    boolean batchUpdate(String sqlTemplate, Object fieldValue, Serializable[] ids);
 }
