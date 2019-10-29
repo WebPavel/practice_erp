@@ -5,6 +5,9 @@ import cn.com.zv2.invoice.product.entity.Product;
 import cn.com.zv2.invoice.product.entity.ProductQueryModel;
 import cn.com.zv2.util.base.BaseDaoImpl;
 import cn.com.zv2.util.base.BaseQueryModel;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -56,6 +59,21 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao {
     public List<Product> listByCategoryId(Long categoryId) {
         String hql = "from Product where category.id = ?";
         return this.getHibernateTemplate().find(hql, categoryId);
+    }
+
+    @Override
+    public void updateProductPopularity() {
+        String hql = "update Product p set p.popularity = (select count(od.id) from OrderDetail od where od.product.id=p.id)";
+        this.getHibernateTemplate().bulkUpdate(hql);
+    }
+
+    @Override
+    public List<Object[]> listWarnProduct() {
+        String sql = "select p.name, sum(sd.quantity)>p.ula, sum(sd.quantity)<p.lla from StorageDetail sd, Product p where sd.productId=p.id group by sd.productId";
+        SessionFactory sessionFactory = this.getHibernateTemplate().getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        return sqlQuery.list();
     }
 
 }

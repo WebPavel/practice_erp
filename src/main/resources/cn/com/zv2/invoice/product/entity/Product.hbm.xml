@@ -12,6 +12,9 @@
         <property name="unit" />
         <property name="bid" />
         <property name="price" />
+        <property name="popularity" />
+        <property name="ula" />
+        <property name="lla" />
         <many-to-one name="category" class="cn.com.zv2.invoice.category.entity.Category" column="categoryId"/>
     </class>
 </hibernate-mapping>

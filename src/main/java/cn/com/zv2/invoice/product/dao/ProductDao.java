@@ -9,4 +9,7 @@ public interface ProductDao extends BaseDao<Product> {
 
     List<Product> listByCategoryId(Long categoryId);
 
+    void updateProductPopularity();
+
+    List<Object[]> listWarnProduct();
 }

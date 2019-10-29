@@ -18,12 +18,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product product) {
+        product.setPopularity(0);
         productDao.save(product);
     }
 
     @Override
     public void update(Product product) {
-        productDao.update(product);
+        Product productSnapshot = productDao.get(product.getId());
+        productSnapshot.setProducer(product.getProducer());
+        productSnapshot.setUnit(product.getUnit());
+        productSnapshot.setBid(product.getBid());
+        productSnapshot.setPrice(product.getPrice());
+        productSnapshot.setUla(product.getUla());
+        productSnapshot.setLla(product.getLla());
     }
 
     @Override
@@ -54,6 +61,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> listByCategory(Long categoryId) {
         return productDao.listByCategoryId(categoryId);
+    }
+
+    @Override
+    public void updateProductPopularity() {
+        productDao.updateProductPopularity();
+    }
+
+    @Override
+    public List<Object[]> listWarnProduct() {
+        return productDao.listWarnProduct();
     }
 
 }

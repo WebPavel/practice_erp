@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="updateProductPopularityTrigger"/>
+                <ref bean="storageWarnTrigger"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="updateProductPopularityTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="updateProductPopularityJob"/>
+        <property name="cronExpression" value="0 0 2 * * ?"/>
+        <!--<property name="cronExpression" value="0/10 * * * * ?"/>-->
+    </bean>
+    <bean id="storageWarnTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="storageWarnJob"/>
+        <property name="cronExpression" value="0 0/30 9-11 * * ?"/>
+    </bean>
+    <bean id="updateProductPopularityJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="timerTask"/>
+        <property name="targetMethod" value="updateProductPopularity"/>
+    </bean>
+    <bean id="storageWarnJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="timerTask"/>
+        <property name="targetMethod" value="storageWarn"/>
+    </bean>
+    <bean id="timerTask" class="cn.com.zv2.invoice.quartz.TimerTask">
+        <property name="productService" ref="productService"/>
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+</beans>

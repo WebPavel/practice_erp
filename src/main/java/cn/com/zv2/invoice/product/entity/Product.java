@@ -16,6 +16,9 @@ public class Product {
     private String unit;
     private Double bid;
     private Double price;
+    private Integer popularity;
+    private Integer ula;
+    private Integer lla;
     private Category category;
 
     private String bidView;
@@ -77,6 +80,30 @@ public class Product {
     public void setPrice(Double price) {
         this.price = price;
         this.priceView = FormatUtils.formatCurrency(price);
+    }
+
+    public Integer getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Integer popularity) {
+        this.popularity = popularity;
+    }
+
+    public Integer getUla() {
+        return ula;
+    }
+
+    public void setUla(Integer ula) {
+        this.ula = ula;
+    }
+
+    public Integer getLla() {
+        return lla;
+    }
+
+    public void setLla(Integer lla) {
+        this.lla = lla;
     }
 
     public Category getCategory() {

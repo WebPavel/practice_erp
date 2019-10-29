@@ -85,6 +85,18 @@
                             </td>
                         </tr>
                         <tr bgcolor="#FFFFFF">
+                            <td width="18%" height="30" align="center">最高预警值:</td>
+                            <td width="82%" colspan="3">
+                                <s:textfield name="product.ula" size="25"/>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
+                            <td width="18%" height="30" align="center">最低预警值:</td>
+                            <td width="82%" colspan="3">
+                                <s:textfield name="product.lla" size="25"/>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#FFFFFF">
                             <td colspan="4">&nbsp;</td>
                         </tr>
                     </table>

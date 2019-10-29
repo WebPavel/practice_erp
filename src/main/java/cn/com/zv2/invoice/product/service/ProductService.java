@@ -11,4 +11,13 @@ public interface ProductService extends BaseService<Product> {
 
     List<Product> listByCategory(Long categoryId);
 
+    /**
+     * 商品热度维护（定时器任务作业时间：2:00:00）
+     */
+    void updateProductPopularity();
+
+    /**
+     * 商品库存预警（定时器任务作业时间：9点到11点，每30分钟一次）
+     */
+    List<Object[]> listWarnProduct();
 }
