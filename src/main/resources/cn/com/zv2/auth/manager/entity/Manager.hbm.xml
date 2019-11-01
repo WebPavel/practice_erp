@@ -6,9 +6,9 @@
         <id name="id">
             <generator class="native" />
         </id>
-        <property name="name" />
-        <property name="password" />
-        <property name="age" />
-        <property name="weight" />
+        <property name="firstname" />
+        <property name="lastname" />
+        <property name="phone" />
+        <property name="email" />
     </class>
 </hibernate-mapping>

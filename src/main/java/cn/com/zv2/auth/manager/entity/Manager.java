@@ -1,15 +1,21 @@
 package cn.com.zv2.auth.manager.entity;
 
+import cn.com.zv2.core.dao.annotation.Like;
+
 /**
  * @author lb
  * @date 2019/9/26 2:38
  */
 public class Manager {
     private Long id;
-    private String name;
-    private String password;
-    private Integer age;
-    private Double weight;
+    @Like
+    private String firstname;
+    @Like
+    private String lastname;
+    @Like
+    private String phone;
+    @Like
+    private String email;
 
     public Long getId() {
         return id;
@@ -19,35 +25,35 @@ public class Manager {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Double getWeight() {
-        return weight;
+    public String getEmail() {
+        return email;
     }
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

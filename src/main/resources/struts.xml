@@ -43,6 +43,18 @@
 
         <!--Manager-->
         <action name="manager_*" class="managerAction" method="{1}">
+            <result name="get_users" type="json">
+                <param name="root">data</param>
+            </result>
+            <result name="save_user" type="json">
+                <param name="root">result</param>
+            </result>
+            <result name="update_user" type="json">
+                <param name="root">result</param>
+            </result>
+            <result name="delete_user" type="json">
+                <param name="root">result</param>
+            </result>
         </action>
 
         <!--Employee-->
